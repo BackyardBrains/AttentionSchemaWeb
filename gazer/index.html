@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BYB Face Gazer Demo</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- The Instruction  Box -->
+    <div id="instrSection" >
+      
+      <p>In this experiment, you will need to keep your head still.  It can be helpful to stablize your head on a stack of books to increase accuracy.</p>
+
+      <button id="closeButton" >Start Experiment</button>
+    </div>
+    <div id="expSection" >
+      <div id="faceContainer"></div>
+      <div id="tracker"></div>
+      <button id="calibrationButton">x</button>
+    </div>
+
+    <script src="js/webgazer.js"></script>
+
+    <script src="../js/baseExperiment.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/facegazerExperiment.js"></script>
+
+
+    <script>       
+
+      document.addEventListener('DOMContentLoaded', function() {
+            const button = document.getElementById('closeButton');
+            button.addEventListener('click', handleStartGame);
+        });
+
+      function handleStartGame(event) {
+                document.getElementById('instrSection').style.display = 'none';
+                runexperiemnt();
+        }
+   
+        async function runexperiemnt(){
+
+           const experiment = new EyeTrackingExperiment;
+
+           experiment.UUID = generateUUID(); // Replace with Common UUID
+           experiment.generateTrials()
+
+           await experiment.start();
+     
+           experiment.end();
+
+       }
+       
+      
+
+   </script>
+</body>
+</html>

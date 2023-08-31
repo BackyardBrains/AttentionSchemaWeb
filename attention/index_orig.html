@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Backyard Brains Attention Schema Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: orange;
+            font-family: Arial, sans-serif;
+        }
+
+        #logo-header {
+            position: absolute;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        #logo-header h1 {
+            margin-top: 150px;
+            margin-left: 20px;
+        }
+        
+        #logo {
+            width: 80px; /* adjust as needed */
+            height: auto; /* keeps the aspect ratio of the image */
+        }
+
+        #start-page {
+            text-align: center;
+            padding-top: 100px;
+            margin-top: 150px; /* Adjust this value to move the user input and image down */
+        }
+        
+        .key {
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            border: 1px solid #000;
+            margin: 10px;
+            display: inline-block;
+            font-size: 24px;
+            transition: background-color 0.3s;
+        }
+        
+        .highlight {
+            background-color: #f00;
+            animation: pulse 1s infinite;
+        }
+        
+        .instruction {
+            background-color: #ff0;
+            animation: blink 1s infinite;
+        }
+        
+        .container {
+            text-align: center;
+        }
+        
+        @keyframes flicker-green {
+            0% {opacity: 1;}
+            50% {opacity: 0;}
+            100% {opacity: 1;}
+        }
+        
+        @keyframes flicker-red {
+            0% {opacity: 1;}
+            50% {opacity: 0;}
+            100% {opacity: 1;}
+        }
+    
+        #start-page {
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        #start-page h1 {
+            font-size: 32px;
+            color: #000;
+        }
+
+        #start-page input,
+        #start-page select,
+        #start-page button {
+            margin: 10px ;
+            padding: 10px;
+            width: 200px;
+        }
+        
+        /* New animations */
+        @keyframes pulse {
+            0% { background-color: #f00; }
+            50% { background-color: #ff0; }
+            100% { background-color: #f00; }
+        }
+        
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes fade-out {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* New styles */
+        .arrow-up {
+            position: relative;
+            display: inline-block;
+        }
+
+        .arrow-up::after {
+            content: "";
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #ff0;
+        }
+        .hand {
+            position: absolute;
+            width: 200px;  /* Adjust as needed */
+            height: 100px;  /* Adjust as needed */
+        }
+        
+        #left-hand {
+            left: 10px;  /* Adjust as needed */
+            top: 50px;  /* Adjust as needed */
+        }
+        
+        #right-hand {
+            right: 10px;  /* Adjust as needed */
+            top: 50px;  /* Adjust as needed */
+        }
+        
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="localforage/dist/localforage.js"></script>
+    <script>localforage.getItem('something', myCallback);</script>
+</head>
+<body>
+        <div id="start-page">
+            <img id="logo" src="https://www.mindsnews.ca/files/medium_BYB-RoundLogo.png">
+            <img id="hand" class="hand" src="svg/04.svg">
+            <h1>Backyard Brains Attention Schema Game!</h1>
+            <input id="username" type="text" placeholder="Enter your name">
+            <br>
+            <input id="date" type="date" placeholder="Enter today's date">
+            <br>
+            <select id="gender" name="gender">
+                <option value="" disabled selected>Select your gender</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="na">Wish not to answer</option>
+            </select>
+            <br>
+            <button id="start-button">Start Game</button>
+        </div>
+
+    <div class="container" style="display: none;">
+        <h1 id="header" style="font-size: 30px;">Part 1: Press the displayed key as fast as you can!</h1>
+        <div id="keyboard"></div>
+        <h3 id="instruction" style="font-size: 24px;">Get ready!</h3>
+        <h3 id="time" style="font-size: 24px;"></h3>
+        <canvas id="chart" style="display: none;"></canvas>
+    </div>
+    <div id="hands" style="display: none;">
+        <img id="left-hand" class="hand" src="svg/02.svg">
+        <img id="right-hand" class="hand" src="svg/03.svg">
+    </div>
+
+    <script>
+        const headerElement = document.getElementById('header');
+        const timeElement = document.getElementById('time');
+        const instructionElement = document.getElementById('instruction');
+        const keys = 'ASDFJKL;';
+        let startTime, endTime, part = 1, round = 1, timerInterval;
+        let reactionTimes = {1: [], 2: []};
+        
+        // New variables for storing user data
+        let username;
+        let date;
+        let gender;
+        
+        const keyboard = document.getElementById('keyboard');
+        for (let key of keys) {
+            keyboard.innerHTML += `<div class="key" id="${key}">${key}</div>`;
+        }
+        
+        function startGame() {
+            // New code: remove any existing arrow indicator
+            const existingArrowIndicator = document.querySelector('.arrow-up');
+            if (existingArrowIndicator) existingArrowIndicator.remove();
+        
+            if (round > 10) {
+                part++;
+                round = 1;
+                if (part > 2) {
+                    endGame();
+                    return;
+                }
+                headerElement.textContent = "Part 2: Press the displayed key as fast as you can when it turns red!";
+            }
+        
+            const randomKey = keys[Math.floor(Math.random() * keys.length)];
+        
+            for (let key of keys) {
+                document.getElementById(key).classList.remove('highlight', 'instruction', 'flicker-green', 'flicker-red');
+            }
+        
+            if (part == 2) {
+                setTimeout(() => {
+                    instructionElement.textContent = "Get ready to press the yellow key:";
+                    const arrowIndicator = document.createElement('span');
+                    arrowIndicator.classList.add('arrow-up');
+                    document.getElementById(randomKey).appendChild(arrowIndicator);
+        
+                    setTimeout(() => {
+                        instructionElement.textContent = "Press the red key!";
+                        document.getElementById(randomKey).classList.add('highlight', 'flicker-red');
+                        startTime = new Date();
+                        timerInterval = setInterval(() => {
+                            const currentTime = new Date();
+                            timeElement.textContent = `Time: ${(currentTime - startTime) / 1000} seconds`;
+                        }, 100);
+                    }, 3000);
+                }, 2000);
+            } else {
+                document.getElementById(randomKey).classList.add('highlight', 'flicker-green');
+                instructionElement.textContent = "Press the green key!";
+                startTime = new Date();
+                timerInterval = setInterval(() => {
+                    const currentTime = new Date();
+                    timeElement.textContent = `Time: ${(currentTime - startTime) / 1000} seconds`;
+                }, 100);
+            }
+        }
+        
+        function endGame() {
+            headerElement.style.display = 'none';
+            timeElement.style.display = 'none';
+            keyboard.style.display = 'none';
+            instructionElement.textContent = "Game over! Here are " + username + "'s average reaction times:";
+            document.getElementById('chart').style.display = 'block';
+        
+            let averageTimes = [1, 2].map(part => reactionTimes[part].reduce((a, b) => a + b, 0) / reactionTimes[part].length);
+            let ctx = document.getElementById('chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Part 1: Without attention', 'Part 2: With attention'],
+                    datasets: [{
+                        label: 'Average reaction time (ms)',
+                        data: averageTimes,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        
+            // New code: Save user data to CSV
+            const csvContent = `Username,Date,Gender,Reaction Time (Part 1),Reaction Time (Part 2)\n"${username}","${date}","${gender}","${reactionTimes[1].join(',')}","${reactionTimes[2].join(',')}"`;
+        
+            // Create a temporary anchor element to download the CSV file
+            const link = document.createElement('a');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'game_results.csv';
+            link.click();
+        }
+        
+        window.addEventListener('keydown', (event) => {
+            const pressedKey = event.key.toUpperCase();
+            if (keys.includes(pressedKey) && document.getElementById(pressedKey).classList.contains('highlight')) {
+                // New code: remove arrow indicator
+                const arrowIndicator = document.getElementById(pressedKey).querySelector('.arrow-up');
+                if (arrowIndicator) arrowIndicator.remove();
+        
+                endTime = new Date();
+                const reactionTime = endTime - startTime;
+                clearInterval(timerInterval);
+                instructionElement.textContent = `Reaction time: ${reactionTime} ms`;
+                reactionTimes[part].push(reactionTime);
+                round++;
+        
+                for (let key of keys) {
+                    document.getElementById(key).classList.remove('highlight', 'flicker-green', 'flicker-red');
+                }
+        
+                setTimeout(startGame, 2000);
+            }
+        });
+        
+        document.getElementById('start-button').addEventListener('click', function() {
+            username = document.getElementById('username').value;
+            if (!username) {
+                alert("Please enter your name");
+                return;
+            }
+        
+            // New code: Retrieve additional user data
+            date = document.getElementById('date').value;
+            gender = document.getElementById('gender').value;
+        
+            document.getElementById('start-page').style.display = 'none';
+            document.querySelector('.container').style.display = 'block';
+            setTimeout(startGame, 2000);  // 2 second delay before game starts
+            document.getElementById('hands').style.display = 'block';  // Show the hands when the game starts
+        });
+        
+    </script>
+</body>
+</html>

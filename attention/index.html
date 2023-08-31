@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attention Reaction Time Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: rgb(255, 255, 255);
+            font-family: Arial, sans-serif;
+        }
+
+        #logo-header {
+            position: absolute;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        #logo-header h1 {
+            margin-top: 150px;
+            margin-left: 20px;
+        }
+        
+        #logo {
+            width: 80px; /* adjust as needed */
+            height: auto; /* keeps the aspect ratio of the image */
+        }
+
+        #start-page {
+            text-align: center;
+            padding-top: 100px;
+            margin-top: 150px; /* Adjust this value to move the user input and image down */
+        }
+        
+        .key {
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            border: 1px solid #000;
+            margin: 10px;
+            display: inline-block;
+            font-size: 24px;
+            transition: background-color 0.3s;
+        }
+        
+        .highlight {
+            background-color: #f00;
+            animation: pulse 1s infinite;
+        }
+        
+        .instruction {
+            background-color: #ff0;
+            animation: blink 1s infinite;
+        }
+        
+        .container {
+            text-align: center;
+        }
+        
+        @keyframes flicker {
+            0% {opacity: 1;}
+            50% {opacity: 0;}
+            100% {opacity: 1;}
+        }
+        
+        #start-page {
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        #start-page h1 {
+            font-size: 32px;
+            color: #000;
+        }
+
+        #start-page input,
+        #start-page select,
+        #start-page button {
+            margin: 10px ;
+            padding: 10px;
+            width: 200px;
+        }
+        
+        /* New animations */
+        @keyframes pulse {
+            0% { background-color: #f00; }
+            50% { background-color: #ff0; }
+            100% { background-color: #f00; }
+        }
+        
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes fade-out {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* New styles */
+        .arrow-up {
+            position: relative;
+            display: inline-block;
+        }
+
+        .arrow-up::after {
+            content: "";
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #ff0;
+        }
+        .hand {
+            position: absolute;
+            width: 200px;  /* Adjust as needed */
+            height: 100px;  /* Adjust as needed */
+        }
+        
+        #left-hand {
+            left: 10px;  /* Adjust as needed */
+            top: 50px;  /* Adjust as needed */
+        }
+        
+        #right-hand {
+            right: 10px;  /* Adjust as needed */
+            top: 50px;  /* Adjust as needed */
+        }
+
+        .spacebar {
+            display: inline-block;
+            background-color: #ccc;
+            padding: 10px 40px;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+        }
+        
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/baseExperiment.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/ReactionTimeExperiment.js"></script>
+</head>
+<body>
+        <div id="start-page">
+            <h1  style="font-size: 30px;"> Place your hands like this then press the <span class="spacebar">Space Bar</span></h1>
+            <img src="./img/Hand.png" /><p></p>
+        </div>
+
+    <div class="container" style="display: none;">
+        <h1 id="header" style="font-size: 30px;"></h1>
+        <div id="keyboard"></div>
+        <h3 id="time" style="font-size: 24px;"></h3>
+        <h3 id="instruction" style="font-size: 24px;">Get ready!</h3>
+        <canvas id="chart" style="display: none;"></canvas>
+    </div>
+    <div id="hands" style="display: none;">
+        <img id="left-hand" class="hand" src="svg/02.svg">
+        <img id="right-hand" class="hand" src="svg/03.svg">
+    </div>
+
+    <script>
+       
+       function handleStartGame(event) {
+            if (event.code === "Space") {
+                document.getElementById('start-page').style.display = 'none';
+                document.querySelector('.container').style.display = 'block';
+                document.getElementById('hands').style.display = 'block';  // Show the hands when the game starts
+                document.removeEventListener("keydown", handleStartGame); // Remove the event listener
+                runexperiemnt();
+            }
+        }
+        
+        document.addEventListener("keydown", handleStartGame);
+    
+        async function runexperiemnt(){
+            experiment.start()
+            
+            experiment.session = {
+                experiment_version: '0.3',
+                browserData: getBrowserData()
+            };
+            experiment.UUID = generateUUID();
+
+            // Generate cued trials
+            const trials = experiment.generateTrials(12);  //Even Numner 
+
+            // Run trials
+            for(let trial of trials) {
+                const reactionTime = await experiment.startTrial(trial.condition, trial.key); 
+            
+                experiment.saveTrialData({
+                    condition: trial.condition,
+                    key: trial.key,
+                    rt: reactionTime
+                });
+                
+            }
+
+            experiment.end();
+            experiment.saveData();
+
+        }
+        
+    </script>
+</body>
+</html>
