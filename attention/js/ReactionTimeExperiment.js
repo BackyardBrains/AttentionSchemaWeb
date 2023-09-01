@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function() {
    headerElement = document.getElementById('header');
    timeElement = document.getElementById('time');
    instructionElement = document.getElementById('instruction');
-   existingArrowIndicator = document.querySelector('.arrow-up');
    keyboard = document.getElementById('keyboard');
    
 
@@ -27,17 +26,40 @@ class ReactionTimeExperiment extends Experiment {
   constructor() {
     super(); 
     this.keys = ['A', 'S', 'D', 'F', 'J', 'K', 'L', ';']; 
+    
+    this.leftKeys = ['A', 'S', 'D', 'F'];
+    this.rightKeys = ['J', 'K', 'L', ';'];
+      
     this.UUID = generateUUID(); // Replace with a function call when in an app.
-    this.experimentName = 'att_rt';
+    this.experimentName = 'rt';
     this.currentTarget = '';
   }
 
 
   start() {
 
-    for (let key of this.keys) {
-      keyboard.innerHTML += `<div class="key" id="${key}">${key}</div>`;
-    } 
+    //for (let key of this.keys) {
+     // keyboard.innerHTML += `<div class="key d-inline-block text-center border m-2 p-4" id="${key}">${key}</div>`;
+    //} 
+
+    this.leftKeys.forEach((key) => {
+      const keyElement = document.createElement('div');
+      keyElement.className = 'key left-hand d-inline-block text-center border m-2 p-4';
+      keyElement.textContent = key;
+      keyElement.id = key;
+      keyboard.appendChild(keyElement);
+    });
+    
+    this.rightKeys.forEach((key) => {
+      const keyElement = document.createElement('div');
+      keyElement.className = 'key right-hand d-inline-block text-center border m-2 p-4';
+      keyElement.textContent = key;
+      keyElement.id = key;
+      keyboard.appendChild(keyElement);
+     
+    });
+
+  
 
   }
 
@@ -87,9 +109,10 @@ class ReactionTimeExperiment extends Experiment {
         
       setTimeout(() => {
         
-        const arrowIndicator = document.createElement('span');
-        arrowIndicator.classList.add('arrow-up');
-        document.getElementById(key).appendChild(arrowIndicator);
+        //const arrowIndicator = document.createElement('span');
+        //arrowIndicator.classList.add('arrow-up');
+        document.getElementById(key).classList.add('arrow-up');
+        //document.getElementById(key).appendChild(arrowIndicator);
 
         setTimeout(() => {
             document.getElementById(key).classList.add('highlight');
@@ -128,7 +151,7 @@ class ReactionTimeExperiment extends Experiment {
             }
 
             existingArrowIndicator = document.querySelector('.arrow-up');
-            if (existingArrowIndicator) existingArrowIndicator.remove();
+            if (existingArrowIndicator) existingArrowIndicator.classList.remove('arrow-up');
       
             resolve(reactionTime);
 
@@ -154,7 +177,7 @@ class ReactionTimeExperiment extends Experiment {
     timeElement.style.display = 'none';
     keyboard.style.display = 'none';
     instructionElement.textContent = "Game over! Here are your average reaction times:";
-    document.getElementById('chart').style.display = 'block';
+    document.getElementById('chart').classList.remove('d-none');
     document.removeEventListener('keydown', keydownListener);     
 
     const cuedTrials = this.trials.filter(trial => trial.condition === 'cued');
