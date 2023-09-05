@@ -16,19 +16,18 @@ document.addEventListener("DOMContentLoaded", function() {
    
 
    // Create an instance of ReactionTimeExperiment
-  experiment = new ReactionTimeExperiment();
+  experiment = new AttentionRTExperiment();
    
 });
 
 
-class ReactionTimeExperiment extends Experiment {
+class AttentionRTExperiment extends Experiment {
 
   constructor() {
     super(); 
-    this.keys = ['A', 'S', 'D', 'F', 'J', 'K', 'L', ';']; 
-    
-    this.leftKeys = ['A', 'S', 'D', 'F'];
-    this.rightKeys = ['J', 'K', 'L', ';'];
+    this.keys = ['A', 'S', 'D', 'F', 'J', 'K', 'L', ';'];
+    this.leftKeys = this.keys.slice(0, 4);
+    this.rightKeys = this.keys.slice(4);
       
     this.UUID = generateUUID(); // Replace with a function call when in an app.
     this.experimentName = 'rt';
@@ -38,26 +37,35 @@ class ReactionTimeExperiment extends Experiment {
 
   start() {
 
-    //for (let key of this.keys) {
-     // keyboard.innerHTML += `<div class="key d-inline-block text-center border m-2 p-4" id="${key}">${key}</div>`;
-    //} 
-
+    //Left Hand
+    let handKeyboard = document.createElement('span');
+    handKeyboard.className = 'left-hand'; 
     this.leftKeys.forEach((key) => {
       const keyElement = document.createElement('div');
-      keyElement.className = 'key left-hand d-inline-block text-center border m-2 p-4';
+      keyElement.className = 'key d-inline-block text-center border m-2 p-4';
       keyElement.textContent = key;
       keyElement.id = key;
-      keyboard.appendChild(keyElement);
+      handKeyboard.appendChild(keyElement);
     });
+    keyboard.appendChild(handKeyboard);
     
+    //Add some space for visual improvements
+    handKeyboard = document.createElement('span');
+    handKeyboard.className = 'spacer'; 
+    keyboard.appendChild(handKeyboard);
+
+    //Right Hand
+    handKeyboard = document.createElement('span');
+    handKeyboard.className = 'right-hand'; 
     this.rightKeys.forEach((key) => {
       const keyElement = document.createElement('div');
-      keyElement.className = 'key right-hand d-inline-block text-center border m-2 p-4';
+      keyElement.className = 'key d-inline-block text-center border m-2 p-4';
       keyElement.textContent = key;
       keyElement.id = key;
-      keyboard.appendChild(keyElement);
+      handKeyboard.appendChild(keyElement);
      
     });
+    keyboard.appendChild(handKeyboard);
 
   
 

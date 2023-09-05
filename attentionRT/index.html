@@ -6,7 +6,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="../js/baseExperiment.js"></script>
   <script src="../js/utils.js"></script>
-  <script src="js/ReactionTimeExperiment.js"></script>
+  <script src="js/attentionRTExperiment.js"></script>
 
   <style>
     .highlight {
@@ -38,8 +38,9 @@
         border-bottom: 15px solid rgb(236, 191, 58); /* Arrow color */
     }
 
-    .left-hand:last-child {
-        margin-right: 20px !important;
+    .spacer {
+        display: inline-block;
+        width: 40px;
     }
     
   </style>
@@ -52,7 +53,7 @@
   </div>
 
   <div class="container d-none">
-    <h1 id="header" class="display-5"></h1>
+    <h2 id="header" class="display-5"></h2>
     <div id="keyboard"></div>
     <h3 id="time"></h3>
     <h3 id="instruction">Get ready!</h3>
