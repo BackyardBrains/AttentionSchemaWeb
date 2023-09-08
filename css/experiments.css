@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+@font-face {
+    font-family: 'matteo-medium';
+    src: url('/fonts/matteo-medium-webfont.woff2') format('woff2'),
+         url('/fonts/matteo-medium-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1 {
+    font-family: 'matteo-medium';
+    font-size: 6em; 
+}
+
+/* Adjust font-size for medium screens */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 4em;
+    }
+}
+
+/* Adjust font-size for small screens */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2.5em;
+    }
+}
+
+body, h2, h3, p {
+    font-family: 'Roboto', sans-serif;
+}
