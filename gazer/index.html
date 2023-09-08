@@ -2,58 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BYB Face Gazer Demo</title>
+    <title>BYB Eye Tracking Demo</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
 
-    <!-- The Instruction  Box -->
-    <div id="instrSection" >
-      
-      <p>In this experiment, you will need to keep your head still.  It can be helpful to stablize your head on a stack of books to increase accuracy.</p>
-
-      <button id="closeButton" >Start Experiment</button>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <!-- The Instruction Box -->
+      <div id="instrSection" class="p-4 border rounded col-md-6">
+          <p class="text-center">In this experiment, you will will be shown a few images while a webcam tracks your eye position. 
+          </p>
+            
+          <p class="text-center">You will need to keep your head still. It can be helpful to stabilize your head on a stack of books to increase accuracy.</p>
+          
+          <p class="text-center">Before we show pictures, We will so some calibration.  Find the small red box and click on it 3 times with your mouse.  This will happen several times.</p>
+          
+          <div class="d-flex justify-content-center mt-2">
+              <button id="closeButton" class="btn btn-primary">Start Experiment</button>
+          </div>
+      </div>
     </div>
-    <div id="expSection" >
+  
+    <!-- Your other content -->
+    <div id="expSection">
       <div id="faceContainer"></div>
       <div id="tracker"></div>
       <button id="calibrationButton">x</button>
     </div>
+  
+  </div>
 
-    <script src="js/webgazer.js"></script>
+  <script src="js/webgazer.js"></script>
 
-    <script src="../js/baseExperiment.js"></script>
-    <script src="../js/utils.js"></script>
-    <script src="js/facegazerExperiment.js"></script>
+  <script src="../js/baseExperiment.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="js/facegazerExperiment.js"></script>
 
 
-    <script>       
+  <script>       
+    document.addEventListener('DOMContentLoaded', function() {
+          const button = document.getElementById('closeButton');
+          button.addEventListener('click', handleStartGame);
+    });
 
-      document.addEventListener('DOMContentLoaded', function() {
-            const button = document.getElementById('closeButton');
-            button.addEventListener('click', handleStartGame);
-        });
+    function handleStartGame(event) {
+              document.getElementById('instrSection').style.display = 'none';
+              runexperiemnt();
+    }
+  
+    async function runexperiemnt(){
 
-      function handleStartGame(event) {
-                document.getElementById('instrSection').style.display = 'none';
-                runexperiemnt();
-        }
-   
-        async function runexperiemnt(){
+          const experiment = new EyeTrackingExperiment;
 
-           const experiment = new EyeTrackingExperiment;
+          experiment.UUID = generateUUID(); // Replace with Common UUID
+          experiment.generateTrials()
 
-           experiment.UUID = generateUUID(); // Replace with Common UUID
-           experiment.generateTrials()
+          await experiment.start();
+    
+          experiment.end();
 
-           await experiment.start();
-     
-           experiment.end();
-
-       }
-       
-      
-
+    }
    </script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
 </body>
 </html>

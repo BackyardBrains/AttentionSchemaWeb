@@ -41,7 +41,7 @@ class EyeTrackingExperiment extends Experiment {
                                   { left: '40%', top: '20%' },
                                   { left: '20%', top: '40%' }];
     
-    this.calibrationLocations = [ { left: '90%', top: '10%' } ];
+    //this.calibrationLocations = [ { left: '90%', top: '10%' } ];
     this.gazeData = [];
 
     this.session = {
