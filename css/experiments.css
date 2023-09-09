@@ -10,20 +10,20 @@
 
 h1 {
     font-family: 'matteo-medium';
-    font-size: 6em; 
+    font-size: 4em; 
 }
 
 /* Adjust font-size for medium screens */
 @media (max-width: 768px) {
     h1 {
-        font-size: 4em;
+        font-size: 2.5em;
     }
 }
 
 /* Adjust font-size for small screens */
 @media (max-width: 480px) {
     h1 {
-        font-size: 2.5em;
+        font-size: 1.5em;
     }
 }
 
