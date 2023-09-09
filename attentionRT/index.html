@@ -11,6 +11,15 @@
 
   <style>
 
+    @media (max-width: 576px) {  /* This targets screens with a width of 576px and below */
+        .hands-image {
+            max-height: 25vh;   /* This will make the image take up no more than 25% of the viewport height */
+            width: auto;        /* Maintains aspect ratio */
+            display: block;
+            margin: 0 auto;    /* Centers the image */
+        }
+    }
+
     .spacing {
         margin-bottom: 30px;
     }
@@ -56,7 +65,7 @@
   <div id="start-page">
     <h1>Attention Reaction Time</h1>
     <h2 class="display-5">Place your hands like this then press the <span class="badge badge-secondary">Space Bar</span></h2>
-    <img src="./img/Hand.png" class="img-fluid" />
+    <img src="./img/Hand.png" class="img-fluid hands-image" />
   </div>
 
   <div class="container d-none">
