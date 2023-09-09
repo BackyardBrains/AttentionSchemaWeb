@@ -41,7 +41,7 @@ class EyeTrackingExperiment extends Experiment {
                                   { left: '40%', top: '20%' },
                                   { left: '20%', top: '40%' }];
     
-    //this.calibrationLocations = [ { left: '90%', top: '10%' } ];
+    this.calibrationLocations = [ { left: '90%', top: '10%' } ];
     this.gazeData = [];
 
     this.session = {
@@ -81,6 +81,8 @@ class EyeTrackingExperiment extends Experiment {
 
   async start() {
 
+    document.getElementById('initialInstructionSection').style.display = 'none';
+
     this.webgazerInstance = await webgazer.setRegression('ridge') 
       .setTracker('TFFacemesh')
       .begin();
@@ -100,6 +102,12 @@ class EyeTrackingExperiment extends Experiment {
     for (const [index, trial] of this.images.entries()) {
       await this.startTrial(index);
     }
+    this.showFinalInstructions();
+  }
+  
+  showFinalInstructions() {
+      document.getElementById('faceContainer').style.display = 'none';
+      document.getElementById('finalInstructionsSection').style.display = 'block';
   }
 
   gazeListener(data, elapsedTime) {
@@ -202,7 +210,19 @@ class EyeTrackingExperiment extends Experiment {
               calibrationButton.removeEventListener('click', this.calibrationClick);
               
               this.webgazerInstance.showPredictionPoints(!config.hideCursorDuringTrials);
-              resolve();
+              
+              const loadingInstructionsSection = document.getElementById('loadingInstructionsSection');
+              loadingInstructionsSection.style.display = 'block';
+
+              this.webgazerInstance.showPredictionPoints(!config.hideCursorDuringTrials);
+                  
+              setTimeout(() => {
+                  loadingInstructionsSection.style.display = 'none';
+                  document.getElementById('faceContainer').style.display = 'block';
+
+                  resolve();
+
+              }, 8000);
           } else {
               // Move to the next location
               calibrationButton.style.left = this.calibrationLocations[this.currentCalibrationLocation].left;
