@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
    timeElement = document.getElementById('time');
    instructionElement = document.getElementById('instruction');
    keyboard = document.getElementById('keyboard');
+   endpage = document.getElementById('end-page');
    
 
    // Create an instance of ReactionTimeExperiment
@@ -98,10 +99,10 @@ class AttentionRTExperiment extends Experiment {
   startTrial(condition, key) {
     this.currentTarget = key
     console.log(condition + " - " + this.currentTarget)
-    instructionElement.textContent = "";
+    instructionElement.textContent = ".";
 
     if (condition == "uncued") {
-      headerElement.textContent = "Part 1: Press the fashing key as fast as you can!";
+      headerElement.textContent = "Part 1: Press the green key as fast as you can!";
       setTimeout(() => {
       document.getElementById(key).classList.add('highlight');
      
@@ -113,7 +114,7 @@ class AttentionRTExperiment extends Experiment {
         },2000);
     } else {
       // 'cued'
-      headerElement.textContent = "Part 2: Now focus only on the key indicated.";
+      headerElement.textContent = "Part 2: The yellow arrow now indicates which key will turn green. Focus there.";
         
       setTimeout(() => {
         
@@ -184,6 +185,8 @@ class AttentionRTExperiment extends Experiment {
     headerElement.style.display = 'none';
     timeElement.style.display = 'none';
     keyboard.style.display = 'none';
+    endpage.style.display = 'block';
+
     instructionElement.textContent = "Game over! Here are your average reaction times:";
     document.getElementById('chart').classList.remove('d-none');
     document.removeEventListener('keydown', keydownListener);     
