@@ -9,6 +9,10 @@
     
 </head>
 <body>
+  <div id="expSection">
+    <div id="faceContainer" class="position-absolute w-100 h-100" style="display:none"></div>
+    <button id="calibrationButton" style="display:none"></button>
+  </div>
 
   <div class="container mt-5 align-items-center">
     <div class="row justify-content-center d-flex align-items-center custom-height">
@@ -35,12 +39,6 @@
       </div>
     </div>
 
-    <div id="expSection">
-      <div id="faceContainer"></div>
-      <button id="calibrationButton" style="display:none"></button>
-    </div>
-
-
     <div class="row justify-content-center">
       <div id="finalInstructionsSection" class="p-4 col-md-6">
         <h1 class="text-center">All done</h1>
@@ -56,6 +54,9 @@
   
   </div>
 
+
+
+
   <script src="js/webgazer.js"></script>
 
   <script src="../js/baseExperiment.js"></script>
@@ -70,18 +71,29 @@
     });
 
     function handleStartGame(event) {
-              runexperiemnt();
+              runexperiment();
     }
   
-    async function runexperiemnt(){
+
+    // For debugging the main experiment
+    //window.onload = async function() {
+    //    const experiment = new EyeTrackingExperiment;
+    //    await experiment.generateTrials();
+
+    //    document.getElementById('faceContainer').style.display = 'block';
+    //    document.getElementById('initialInstructionSection').style.display = 'none';
+    //    await experiment.runTrials();
+          
+    //};
+
+    async function runexperiment(){
 
           const experiment = new EyeTrackingExperiment;
 
           experiment.UUID = generateUUID(); // Replace with Common UUID
-          experiment.generateTrials()
+          await experiment.generateTrials();
 
           await experiment.start();
-    
           experiment.end();
 
     }

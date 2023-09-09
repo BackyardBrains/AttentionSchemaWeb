@@ -1,9 +1,10 @@
 const config = {
   experiment_name: 'gazer',
-  experiment_version: '0.3',
-  trialDuration: 5000, // Duration in milliseconds
-  hideCursorDuringTrials: true //show the red dot over eyes?
-  
+  experiment_version: '0.4',
+  trialDuration: 4000, // Duration in milliseconds
+  hideCursorDuringTrials: true, //show the red dot over eyes?
+  numberOfImages: 8,
+  numberOfTrials: 6 // We can have more images then trials, so we can randomize the images.
   // ... other config properties
 };
 class EyeTrackingExperiment extends Experiment {
@@ -21,8 +22,6 @@ class EyeTrackingExperiment extends Experiment {
     this.tracker = document.getElementById('tracker');    
     this.recordData = false;
 
-    // Faces
-    this.faces = ["face001.png", "face002.jpg", "face003.jpg"];
     this.calibrationClicksPerLocation = 3;
     this.calibrationLocations = 8;
     this.currentCalibrationClicks = 0;
@@ -41,7 +40,7 @@ class EyeTrackingExperiment extends Experiment {
                                   { left: '40%', top: '20%' },
                                   { left: '20%', top: '40%' }];
     
-    this.calibrationLocations = [ { left: '90%', top: '10%' } ];
+    //this.calibrationLocations = [ { left: '90%', top: '10%' } ];
     this.gazeData = [];
 
     this.session = {
@@ -53,31 +52,44 @@ class EyeTrackingExperiment extends Experiment {
 
   
 
-  generateTrials() {
-   
+  async generateTrials() {
+    this.faces = [];
+    for(let i = 1; i <= config.numberOfImages; i++) {
+      // Pad the number with leading zeros so that it is always 3 digits
+      let paddedNumber = String(i).padStart(3, '0');
+      this.faces.push(`face${paddedNumber}.png`);
+    }
     this.faces = shuffle(this.faces);
+    this.faces = this.faces.slice(0, config.numberOfTrials); 
     this.images = [];
 
-    // Load and check each face in the shuffled array
-    this.faces.forEach(face => {
-      let img = new Image();
-      img.src = `./img/${face}`;
+    const loadPromises = this.faces.map(face => {
+        return new Promise((resolve, reject) => {
+            let img = new Image();
+            img.src = `./img/${face}`;
 
-      img.onload = () => {
-        
-        this.images.push({
-          imageName: face,
-          width: img.width,
-          height: img.height
+            img.onload = () => {
+
+                document.getElementById("faceContainer").style.backgroundImage = `url(${img.src})`;
+
+                this.images.push({
+                    imageName: face,
+                    width: img.width,
+                    height: img.height
+                });
+                resolve();
+            };
+
+            img.onerror = () => {
+                console.log(`Image ${face} could not be loaded`);
+                reject(new Error(`Image ${face} could not be loaded`));
+            };
         });
-      };
+    });
 
-      img.onerror = () => {
-        console.log(`Image ${face} could not be loaded`);
-      };
-});
-
+    await Promise.all(loadPromises);
   }
+
 
   async start() {
 
@@ -129,7 +141,9 @@ class EyeTrackingExperiment extends Experiment {
     let img = document.createElement('img');
     img.src = "img/"+this.images[trialIndex].imageName;
 
-    faceContainer.appendChild(img);
+    //faceContainer.appendChild(img);
+    faceContainer.style.backgroundImage = `url(${img.src})`;
+
   
     // Deselect any selected element
     window.getSelection().removeAllRanges();
@@ -222,7 +236,7 @@ class EyeTrackingExperiment extends Experiment {
 
                   resolve();
 
-              }, 8000);
+              }, 3000);
           } else {
               // Move to the next location
               calibrationButton.style.left = this.calibrationLocations[this.currentCalibrationLocation].left;

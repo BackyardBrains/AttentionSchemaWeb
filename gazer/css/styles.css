@@ -5,24 +5,31 @@
   align-items: center;
 }
 
-#faceContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  padding: 0 !important; 
-  margin: 0 !important;  
+/* Reset and set basic properties for body and html */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;  /* Ensure no scrollbars appear */
+  height: 100%;      /* Make sure these elements take the full height */
+  position: relative; /* To act as a positioning context for absolute positioned children */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
-#faceContainer img {
-  width: 100vw;
-  height: auto;
-  position: relative;
-  object-fit: cover;
-  object-position: center;
+#faceContainer {
+  position: fixed;  /* Fixes the position relative to the viewport */
+  top: 0;
+  left: 0;
+  width: 100vw;     /* Full viewport width */
+  height: 100vh;    /* Full viewport height */
+  background-size: cover;     /* Ensures the image scales and covers the entire container */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Ensures the image doesn't repeat */
+  cursor: none;
 }
+
 
 #finalInstructionsSection{
   display: none;
