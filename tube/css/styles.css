@@ -1,0 +1,53 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+#initialInstructionSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* to horizontally center the content */
+}
+
+#gamesection {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.arrow-btn {
+    font-size: 24px;
+    border: 1px solid black;
+    padding: 10px 20px;
+    background-color: #e0e0e0;
+
+    transition: background-color 0.3s;
+    border-radius: 25px;  /* This will round the corners */
+}
+
+.left-arrow::before {
+    content: "\2190"; /* Unicode for left arrow */
+}
+
+.right-arrow::before {
+    content: "\2192"; /* Unicode for right arrow */
+}
+
+.space-bar {
+    display: inline-block;
+    width: 150px;            /* You can adjust this value to your preferred width */
+    height: 40px;            /* Adjust for your preferred height */
+    background-color: #e0e0e0;
+    border: 1px solid black;
+    text-align: center;
+    line-height: 40px;       /* Adjust this value to match the height for vertical centering */
+    font-size: 16px;         /* Adjust as per your preference */
+    transition: background-color 0.3s;
+    border-radius: 10px;     /* Giving a little roundness to corners */
+}

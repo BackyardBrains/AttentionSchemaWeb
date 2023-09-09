@@ -1,9 +1,14 @@
+const config = {
+    experiment_name: 'tube',
+    experiment_version: '0.92'
+  };
+
 class TubeExperiment extends Experiment {
 
     constructor() {
         super();
         this.UUID = '';
-        this.experimentName = 'tube';
+        this.experimentName = config.experiment_name;
         this.session = '';
         this.trials = [];
         this.trialtypes = [];
@@ -178,10 +183,9 @@ class TubeExperiment extends Experiment {
 
 window.onload = function() {
     const tubeExp = new TubeExperiment();
-    const experiment_version = "0.91";
         
     tubeExp.session = {
-        experiment_version: experiment_version,
+        experiment_version: config.experiment_version,
         browserData: getBrowserData()
     };
     tubeExp.UUID = generateUUID();
