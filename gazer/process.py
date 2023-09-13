@@ -1,3 +1,6 @@
+#written by Stanislav Mircic 13. Sep. 2023
+# Backyard Brains 
+
 from PIL import Image
 import os
 import json
