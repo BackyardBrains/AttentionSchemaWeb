@@ -161,15 +161,16 @@ class EyeTrackingExperiment extends Experiment {
     
     // Remove any previous face
     let faceContainer = document.getElementById('faceContainer');
-    let imgRect, windowScrollX, windowScrollY, windowWidth, windowHeight;
+    let imgRect, windowScrollX, windowScrollY, windowWidth, windowHeight, visibleImageWidth, visibleImageHeight;
 
-    if (faceContainer.firstChild) {
-      imgRect = faceContainer.firstChild.getBoundingClientRect();
+    if (faceContainer) {
+      imgRect = 0;//faceContainer.firstChild.getBoundingClientRect();
       windowScrollX = window.scrollX;
       windowScrollY = window.scrollY;
       windowWidth = window.innerWidth;
       windowHeight = window.innerHeight;
-
+      visibleImageWidth = faceContainer.clientWidth;
+      visibleImageHeight = faceContainer.clientHeight;
       while (faceContainer.firstChild) {
         faceContainer.removeChild(faceContainer.firstChild);
       }
@@ -183,7 +184,8 @@ class EyeTrackingExperiment extends Experiment {
       layout: {
         imgRect,
         windowScroll: { x: windowScrollX, y: windowScrollY },
-        windowSize: { width: windowWidth, height: windowHeight }
+        windowSize: { width: windowWidth, height: windowHeight },
+        visibleImageSize:{width:visibleImageWidth, height:visibleImageHeight}
       }
     });
 
