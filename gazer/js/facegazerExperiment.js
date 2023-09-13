@@ -1,6 +1,6 @@
 const config = {
   experiment_name: 'gazer',
-  experiment_version: '0.4',
+  experiment_version: '0.5',
   trialDuration: 4000, // Duration in milliseconds
   hideCursorDuringTrials: true, //show the red dot over eyes?
   numberOfImages: 8,
