@@ -18,6 +18,7 @@
 #data files
 uploads/
 venv/
+__pycache__/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
