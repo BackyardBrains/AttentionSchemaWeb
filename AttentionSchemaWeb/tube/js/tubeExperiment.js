@@ -1,6 +1,6 @@
 const config = {
     experiment_name: 'tube',
-    experiment_version: '0.92'
+    experiment_version: '1.0'
   };
 
 class TubeExperiment extends Experiment {

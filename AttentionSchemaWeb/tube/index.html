@@ -1,106 +1,96 @@
 <!DOCTYPE html>
 <html>
-        <head>
-            <style>
-                .no-select {
-                    user-select: none; /* Standard syntax */
-                    -webkit-user-select: none; /* Chrome, Safari, Opera */
-                    -moz-user-select: none; /* Firefox */
-                    -ms-user-select: none; /* IE 10+ */
-                }
-            </style>
-            <script src="../js/baseExperiment.js"></script>
-            <script src="../js/utils.js"></script>
-            <script src="js/tubeExperiment.js"></script> 
 
-            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-            <link href="/css/experiments.css" rel="stylesheet">
-            <link href="css/styles.css" rel="stylesheet" >
-            
-        </head>
+<head>
+    <style>
+        .no-select {
+            user-select: none;
+            /* Standard syntax */
+            -webkit-user-select: none;
+            /* Chrome, Safari, Opera */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* IE 10+ */
+        }
+    </style>
+    <script src="../js/baseExperiment.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/tubeExperiment.js"></script>
 
-    <body class="d-flex flex-column justify-content-center align-items-center vh-100">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/experiments.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
 
-        <div id='initialInstructionSection' class="p-4 col-md-12 text-center">
-            <H1>Tube-tilt Balance Game</H1>
-            <p>
-                In this game you will see different types of paper tubes of different sizes (like from the center of toilet paper or paper towel rolls).
-            </p>
-            <p>
-                Your job is to tilt the tube such that it is <em>just about</em> to tip over, but doesn't. Get as close as you can to the tipping point without going over. 
-            </p>
-            <p>
-                (Video coming soon)
-            </p>
-            <p>
-                The tube will be sitting on a table, and the direction of the tilt is indiucated by an arrow.  Use the arrow keys to select the right angle.  When you found the right angle, press the space bar.  
-            </p>
-            <p>
-                There will be 32 trials.  Try to guess the correct angles!
-            </p>
-            <div class="d-flex justify-content-center mt-2">
-                <button id="closeButton" class="btn btn-primary">Start Experiment</button>
-            </div>
-        
-        </div>
+</head>
 
-        <div id="gamesection" class="container">
-            <p>
-                Use <button class="arrow-btn left-arrow"></button>
-                <button class="arrow-btn right-arrow"></button> to tilt the tube in the direction indicated.
-            </p>
-            <p>
-               
-            </p>
+<body class="d-flex flex-column justify-content-center align-items-center vh-100">
 
-            <svg width="1023" height="248" viewBox="0 0 1023 248">
-                <rect width="100%" height="100%" fill="skyblue" />
-                <image id="leftface" style="display:none" xlink:href="" width="200" height="200" x="0" y="10" />
-                <image id="rightface" style="display:none" xlink:href="" width="200" height="200" x="823" y="10" />
-                <rect id="platform" x="244" y="160" width="540" height="15" fill="brown" />
-                <rect id="tube" x="502" y="30" width="24" height="130"  fill="white" stroke="black"/>
-                <line x1="514" y1="15" x2="514" y2="163" style="stroke:black" />
-                <rect id="bottom" x="0" y="175" width="1023" height="74"  fill="white" />
-                <polygon id="arrow" points="473,215 549,215 549,225 573,210 549,195 549,205 473,205" fill="green" />
-            </svg>
-            <p>
-               
-            </p>
-
-            <p>
-                When you think you have the right angle, press <span class="space-bar">SPACE BAR</span>.  Don't let it tip!
-            </p>
-        </div>
-
-        <div id='formsection' style="display:none">
-
-            <H1> Part 2: Survey</H1>
-            <p>
-
-                Thank you for playing. You will now click the link below to fill out a few questions about the game you just played.
-            </p>
-            <button id="formbutton" type="button" onclick="">Continue to Survey</button>
-    
-
-        </div>
+    <div id='initialInstructionSection' class="p-4 col-md-12 text-center">
+        <H1>The Tipping Point Game</H1>
+        <p> In this experiment you will see paper tubes of different sizes (like from the center of toilet paper or
+            paper towel rolls). </p>
+        <p> Your job is to tilt each tube such that it reaches the <em>"tipping point"</em>: The angle at which the
+            paper tube will begin to tip over. </p>
+        <p>
+            <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="1280" height="720"
+                type="text/html"
+                src="https://www.youtube.com/embed/rgWQBKCgRdc?autoplay=0&fs=0&iv_load_policy=3&showinfo=0&rel=0&cc_load_policy=0&start=0&end=0"></iframe>
+        </p>
+        <p> The tube will be sitting on a table, and the direction of the tilt is indiucated by an arrow. Use the arrow
+            keys to change the angle of the tipping point, then press the space bar. </p>
+        <p> There will be 32 trials. Try to guess the anlge of each tipping point! </p>
+        <div class="d-flex justify-content-center mt-2"> <button id="closeButton" class="btn btn-primary">Start
+                Experiment</button> </div>
     </div>
-    
-    <script>       
-        document.addEventListener('DOMContentLoaded', function() {
-              const button = document.getElementById('closeButton');
-              button.addEventListener('click', handleStartGame);
+    <div id="gamesection" class="container">
+        <p> Use <button class="arrow-btn left-arrow"></button> <button class="arrow-btn right-arrow"></button> to tilt
+            the tube in the direction indicated. </p>
+        <p> </p>
+        <svg width="1023" height="248" viewBox="0 0 1023 248">
+            <rect width="100%" height="100%" fill="skyblue" />
+            <image id="leftface" style="display:none" xlink:href="" width="200" height="200" x="0" y="10" />
+            <image id="rightface" style="display:none" xlink:href="" width="200" height="200" x="823" y="10" />
+            <rect id="platform" x="244" y="160" width="540" height="15" fill="brown" />
+            <rect id="tube" x="502" y="30" width="24" height="130" fill="white" stroke="black" />
+            <line x1="514" y1="15" x2="514" y2="163" style="stroke:black" />
+            <rect id="bottom" x="0" y="175" width="1023" height="74" fill="white" />
+            <polygon id="arrow" points="473,215 549,215 549,225 573,210 549,195 549,205 473,205" fill="green" />
+        </svg>
+        <p> </p>
+        <p> When you think you have found the tipping point, press <span class="space-bar">SPACE BAR</span>. </p>
+    </div>
+
+    <div id='formsection' style="display:none">
+
+        <H1> Part 2: Survey</H1>
+        <p>
+
+            Thank you for playing. You will now click the link below to fill out a few questions about the game you just
+            played.
+        </p>
+
+        <button id="formbutton" type="button" onclick="">Continue to Survey</button>
+    </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const button = document.getElementById('closeButton');
+            button.addEventListener('click', handleStartGame);
         });
-    
+
         function handleStartGame(event) {
             document.getElementById('initialInstructionSection').style.display = 'none';
             document.getElementById('gamesection').style.display = 'flex';
         }
-      
+
     </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+
 </body>
+
 </html>
