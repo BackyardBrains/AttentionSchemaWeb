@@ -1,7 +1,7 @@
 const config = {
     experiment_name: 'tube',
-    experiment_version: '1.1',
-    datafile_version: '1.1'
+    experiment_version: '1.2',
+    datafile_version: '1.2'
   };
 
 class TubeExperiment extends Experiment {
@@ -76,8 +76,8 @@ class TubeExperiment extends Experiment {
         for(let i = 0; i < this.tubeTypes.length; i++) {
             for(let arrowdirection of ['left', 'right']) {
                 for(let faceSide of ['left', 'right']) {
-                    for(let facetype of ['sighted', 'blindfold']) {
-                        this.trialtypes.push({tubeTypeIndex: i, arrowDirection: arrowdirection, faceSide: faceSide, facetype: facetype });
+                    for(let faceType of ['sighted', 'blindfold']) {
+                        this.trialtypes.push({tubeTypeIndex: i, arrowDirection: arrowdirection, faceSide: faceSide, faceType: faceType });
                     }
                 }
             }
@@ -91,7 +91,7 @@ class TubeExperiment extends Experiment {
         this.tubeTypeIndex = this.trialtypes[this.trialIndex].tubeTypeIndex;
         this.arrowDirection = this.trialtypes[this.trialIndex].arrowDirection;
         this.faceSide = this.trialtypes[this.trialIndex].faceSide;
-        this.facetype = this.trialtypes[this.trialIndex].facetype;
+        this.faceType = this.trialtypes[this.trialIndex].faceType;
     
         this.tube.setAttribute('width', this.tubeTypes[this.tubeTypeIndex].width);
         this.tube.setAttribute('height', this.tubeTypes[this.tubeTypeIndex].height);
@@ -101,11 +101,11 @@ class TubeExperiment extends Experiment {
         this.leftface.style.display = 'none'; 
 
         if (this.faceSide == 'left') {
-            this.leftface.setAttribute("xlink:href", "img/" + this.faceSide + "_" + this.image_name +  "_" + this.facetype + ".png");
+            this.leftface.setAttribute("xlink:href", "img/" + this.faceSide + "_" + this.image_name +  "_" + this.faceType + ".png");
             this.leftface.setAttribute('transform', 'rotate(' +  this.tubeTypes[this.tubeTypeIndex].faceAngle + ', 100, 200)');
             this.leftface.style.display = ''; 
         } else {
-            this.rightface.setAttribute("xlink:href", "img/" + this.faceSide + "_" + this.image_name +  "_" + this.facetype + ".png");
+            this.rightface.setAttribute("xlink:href", "img/" + this.faceSide + "_" + this.image_name +  "_" + this.faceType + ".png");
             //rightface.setAttribute('transform', 'translate(1023, 0) scale(-1, 1) translate(-1023, 0)');
             this.rightface.setAttribute('transform', 'rotate(' +  (-1 * this.tubeTypes[this.tubeTypeIndex].faceAngle).toString() + ', 923, 200)');
             this.rightface.style.display = ''; 
@@ -135,7 +135,7 @@ class TubeExperiment extends Experiment {
             trialIndex: this.trialIndex,
             tubeTypeIndex: this.tubeTypeIndex,
             arrowDirection: this.arrowDirection,
-            facetype: this.facetype,
+            faceType: this.faceType,
             faceSide: this.faceSide,
             endAngle: this.currentAngle
         };
