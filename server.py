@@ -15,7 +15,7 @@ def receive_data():
     expname = data.get('experiment', 'exp')
     filepath = f'/var/www/schema.backyardbrains.com/uploads/{expname}_{filename}.json'
 
-    with open(filepath, 'a') as f:
+    with open(filepath, 'w') as f:
 
         f.write(json.dumps(data, indent=4))
         f.write("\n")
