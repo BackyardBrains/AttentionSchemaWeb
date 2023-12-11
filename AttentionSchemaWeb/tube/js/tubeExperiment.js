@@ -1,7 +1,7 @@
 const config = {
     experiment_name: 'tube',
     experiment_version: '1.2',
-    datafile_version: '1.2'
+    datafile_version: '1.3'
   };
 
 class TubeExperiment extends Experiment {
@@ -184,10 +184,14 @@ class TubeExperiment extends Experiment {
 
 window.onload = function() {
     const tubeExp = new TubeExperiment();
+
+    const sessionGroup = getQueryParam('sg'); // Get session_group from URL
+
         
     tubeExp.session = {
-        experiment_version: config.experiment_version,
-        file_version: config.datafile_version,
+        session_group: sessionGroup, // Added in File v1.3
+        experiment_version: config.experiment_version,  
+        file_version: config.datafile_version, // Added in File v1.2
         browserData: getBrowserData(),
         tubeTypes: this.tubeTypes
     };
@@ -196,4 +200,9 @@ window.onload = function() {
     // Generate trials and start the first one
     tubeExp.generateTrials();
     tubeExp.startTrial();
+}
+
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
 }
