@@ -230,3 +230,26 @@ function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 }
+document.addEventListener('DOMContentLoaded', function () {
+    const acParameter = getQueryParam('AC');
+    const passwordSection = document.getElementById('passwordSection');
+    const passwordInput = document.getElementById('passwordInput');
+    const submitPassword = document.getElementById('submitPassword');
+    const passwordError = document.getElementById('passwordError');
+
+    if (acParameter) {
+        passwordSection.style.display = 'block';
+    }
+
+    submitPassword.addEventListener('click', function() {
+        if (passwordInput.value === acParameter) {
+            // Password is correct, hide the initial instruction section and show the game section
+            document.getElementById('passwordSection').style.display = 'none';
+            document.getElementById('initialInstructionSection').style.display = 'block';
+            //document.getElementById('gamesection').style.display = 'flex';
+        } else {
+            // Password is incorrect, show an error message
+            passwordError.style.display = 'block';
+        }
+    });
+});

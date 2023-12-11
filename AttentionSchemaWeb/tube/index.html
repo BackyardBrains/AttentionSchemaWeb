@@ -26,7 +26,15 @@
 
 <body class="d-flex flex-column justify-content-center align-items-center vh-100">
 
-    <div id='initialInstructionSection' class="p-4 col-md-12 text-center">
+    <div id="passwordSection" style="display:none" class="text-center">
+        <H1>Test Verification</H1>
+        <p>Please enter the password to start the experiment:</p>
+        <input type="password" id="passwordInput" />
+        <button id="submitPassword" class="btn btn-primary">Submit</button>
+        <p id="passwordError" style="color:red;display:none">Incorrect password. Please try again.</p>
+    </div>
+    
+    <div id='initialInstructionSection'  style="display:none"  class="p-4 col-md-12 text-center">
         <H1>The Tipping Point Game</H1>
         <p> 
             In this experiment, you will see paper tubes of different sizes (like those from the center of toilet paper or paper towel rolls).
@@ -77,12 +85,18 @@
         document.addEventListener('DOMContentLoaded', function () {
             const button = document.getElementById('closeButton');
             button.addEventListener('click', handleStartGame);
+            const access_code = getQueryParam('AC');
+            if (!access_code) {
+                document.getElementById('initialInstructionSection').style.display = 'block';
+                document.getElementById('passwordSection').style.display = 'none';
+            }
         });
 
         function handleStartGame(event) {
+            document.getElementById('passwordSection').style.display = 'none';
             document.getElementById('initialInstructionSection').style.display = 'none';
             document.getElementById('gamesection').style.display = 'flex';
-        }
+            }
 
     </script>
 
