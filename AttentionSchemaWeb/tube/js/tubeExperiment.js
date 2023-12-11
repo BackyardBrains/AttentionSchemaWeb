@@ -182,24 +182,48 @@ class TubeExperiment extends Experiment {
   
   }
 
+function preloadImages(imageUrls) {
+    let loadPromises = imageUrls.map(url => {
+        return new Promise((resolve, reject) => {
+            let img = new Image();
+            img.onload = resolve;
+            img.onerror = reject;
+            img.src = url;
+        });
+    });
+    return Promise.all(loadPromises);
+}
+
 window.onload = function() {
-    const tubeExp = new TubeExperiment();
+    const faceImageUrls = [ //Hack.  Sould be auto-generated from variables.
+        'img/left_girl2_sighted.png',
+        'img/left_girl2_blindfold.png',
+        'img/right_girl2_sighted.png',
+        'img/right_girl2_blindfold.png'
+    ];
+    
+    preloadImages(faceImageUrls).then(() => {
+        const tubeExp = new TubeExperiment();
+            
+        const sessionGroup = getQueryParam('session_group'); // Get session_group from URL
 
-    const sessionGroup = getQueryParam('sg'); // Get session_group from URL
+        tubeExp.session = {
+            session_group: sessionGroup,
+            experiment_version: config.experiment_version,
+            file_version: config.datafile_version,
+            browserData: getBrowserData(),
+            tubeTypes: tubeExp.tubeTypes
+        };
+        tubeExp.UUID = generateUUID();
 
-        
-    tubeExp.session = {
-        session_group: sessionGroup, // Added in File v1.3
-        experiment_version: config.experiment_version,  
-        file_version: config.datafile_version, // Added in File v1.2
-        browserData: getBrowserData(),
-        tubeTypes: this.tubeTypes
-    };
-    tubeExp.UUID = generateUUID();
-
-    // Generate trials and start the first one
-    tubeExp.generateTrials();
-    tubeExp.startTrial();
+        // Generate trials and start the first one
+        tubeExp.generateTrials();
+        tubeExp.startTrial();
+    }).catch(error => {
+        console.error("Error loading images: ", error);
+        // Handle image loading errors here
+    });
+    
 }
 
 function getQueryParam(param) {
