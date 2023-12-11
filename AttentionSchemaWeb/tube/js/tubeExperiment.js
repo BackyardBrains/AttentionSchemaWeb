@@ -205,7 +205,7 @@ window.onload = function() {
     preloadImages(faceImageUrls).then(() => {
         const tubeExp = new TubeExperiment();
             
-        const sessionGroup = getQueryParam('session_group'); // Get session_group from URL
+        const sessionGroup = getQueryParam('SG'); // Get session_group from URL
 
         tubeExp.session = {
             session_group: sessionGroup,
@@ -231,18 +231,18 @@ function getQueryParam(param) {
     return urlParams.get(param);
 }
 document.addEventListener('DOMContentLoaded', function () {
-    const acParameter = getQueryParam('AC');
+    const access_control = getQueryParam('AC');
     const passwordSection = document.getElementById('passwordSection');
     const passwordInput = document.getElementById('passwordInput');
     const submitPassword = document.getElementById('submitPassword');
     const passwordError = document.getElementById('passwordError');
 
-    if (acParameter) {
+    if (access_control) {
         passwordSection.style.display = 'block';
     }
 
     submitPassword.addEventListener('click', function() {
-        if (passwordInput.value === acParameter) {
+        if (passwordInput.value === access_control) {
             // Password is correct, hide the initial instruction section and show the game section
             document.getElementById('passwordSection').style.display = 'none';
             document.getElementById('initialInstructionSection').style.display = 'block';
