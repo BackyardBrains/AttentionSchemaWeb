@@ -5,20 +5,22 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+import os
 
-@app.route('/data', methods=['POST'])
-def receive_data():
+@app.route('/upload', methods=['POST'])
+def upload_file():
     data = request.get_json()
+    uuid = data['uuid']
+    counter = 0
+    filename = f"{uuid}.json"
 
-    # Get the filename from the JSON data. If it doesn't exist, use 'data_log.json' as a default
-    filename = data.get('UUID', 'data_log.json')
-    expname = data.get('experiment', 'exp')
-    filepath = f'/var/www/schema.backyardbrains.com/uploads/{expname}_{filename}.json'
+    # Check if file exists and append a counter if it does
+    while os.path.isfile(filename):
+        counter += 1
+        filename = f"{uuid}.{str(counter).zfill(2)}.json"
 
-    with open(filepath, 'w') as f:
-
-        f.write(json.dumps(data, indent=4))
-        f.write("\n")
+    with open(filename, 'w') as file:
+        json.dump(data, file)
 
     return 'OK', 200
 
