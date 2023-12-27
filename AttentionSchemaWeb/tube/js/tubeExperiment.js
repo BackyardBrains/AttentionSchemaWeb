@@ -1,7 +1,7 @@
 const config = {
     experiment_name: 'tube',
-    experiment_version: '1.2',
-    datafile_version: '1.3'
+    experiment_version: '1.3',
+    datafile_version: '1.4'
   };
 
 class TubeExperiment extends Experiment {
@@ -11,6 +11,7 @@ class TubeExperiment extends Experiment {
         this.UUID = '';
         this.experimentName = config.experiment_name;
         this.session = '';
+        this.trialStartTime = 0;
         this.trials = [];
         this.trialtypes = [];
         this.FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfiziJ_yQ7LLJEejvsMwjNVu7zyCmSQX8qUwC8sB7QDB6LmfQ/viewform?usp=pp_url&entry.766586855='
@@ -57,12 +58,12 @@ class TubeExperiment extends Experiment {
                 case 'ArrowLeft':
                 case 'f': 
                 this.tube.style.display = 'none'; 
-                    this.currentAngle = (this.currentAngle <= -45) ? -45 : this.currentAngle - 1;
+                    this.currentAngle = (this.currentAngle <= -180) ? -180 : this.currentAngle - 1;
                     break;
                 case 'ArrowRight':
                 case 'j':
                     this.tube.style.display = 'none'; 
-                    this.currentAngle = (this.currentAngle >= 45) ? 45 : this.currentAngle + 1;
+                    this.currentAngle = (this.currentAngle >= 180) ? 180 : this.currentAngle + 1;
                     break;
                 case ' ':
                     this.endTrial();
@@ -128,16 +129,22 @@ class TubeExperiment extends Experiment {
         this.currentAngle = 0; // reset line's angle at the start of each trial
         this.line.setAttribute('transform', `rotate(${this.currentAngle}, 514, 163)`);
         this.arrow.setAttribute('transform', (this.currentDirection != this.arrowDirection) ? 'rotate(180, 523, 210)' : '');
+        this.trialStartTime = Date.now();
+
     }
   
     endTrial() {
+
+        let trialLatency = Date.now() - this.trialStartTime;
+
         let trialResult = {
             trialIndex: this.trialIndex,
             tubeTypeIndex: this.tubeTypeIndex,
             arrowDirection: this.arrowDirection,
             faceType: this.faceType,
             faceSide: this.faceSide,
-            endAngle: this.currentAngle
+            endAngle: this.currentAngle,
+            latency: trialLatency
         };
     
         this.trials.push(trialResult);
