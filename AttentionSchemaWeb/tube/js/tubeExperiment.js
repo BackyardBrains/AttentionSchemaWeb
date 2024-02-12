@@ -4,6 +4,42 @@ const config = {
     datafile_version: '1.4'
   };
 
+const translations = {
+    en: {
+        testVerification: "Test Verification",
+        enterPassword: "Please enter the password to start the experiment:",
+        // Add all other text content here in English
+        tippingPointGame: "The Tipping Point Game",
+        welcome1: "Welcome to the Tube Tilt Experiment! Your task is to determine the 'tipping point' at which a virtual tube will fall over. Think carefully about the exact point where a tipped tube transitions from going straight back up again to falling down. We want to know the smallest angle in which it fall over. See video for more details.",
+        welcome2: "The tube will be sitting on a table, and the direction of the tilt is indicated by an arrow. Use the left and right arrow keys to adjust the tilt, and press the space bar when you believe you've reached this critical angle.",
+        welcome3: "Your precision in finding this delicate balance will be key to the experiment's success. Good luck!",
+        startExp: "Start Experiment",
+        gameinstr1: "Find the Tipping Point (smallest angle to tip)! Use the left and right arrow keys to tilt the tube in the direction indicated.",
+        gameinstr2: "When you think you have found the tipping point, press  <span class='space-bar'>SPACE BAR</span>",
+        surveyHeader: "Part 2: Survey",
+        surveyText: "Thank you for playing. You will now click the link below to fill out a few questions about the game you just played.",
+        continueToSurvey: "Continue to Survey"
+    },
+    rs: {
+        testVerification: "Provera Testa",
+        enterPassword: "Unesite lozinku da biste započeli eksperiment:",
+        // Add all other text content here in Serbian
+        tippingPointGame: "Igra Prevlacenja",
+        welcome1: "Dobrodošli u eksperiment nagiba cevi! Vaš zadatak je da odredite 'tačku prevlačenja' pri kojoj će virtuelna cev pasti. Pažljivo razmislite o tačnoj tački gde cev koja se naginje prelazi iz stanja da se vraća pravo gore u stanje pada. Želimo da znamo najmanji ugao u kojem će pasti. Pogledajte video za više detalja.",
+        welcome2:"Cev će biti postavljena na stolu, a smer nagiba je označen strelicom. Koristite tastere sa strelicama levo i desno da prilagodite nagib, i pritisnite razmaknicu kada verujete da ste dostigli ovu kritičnu tačku.",
+        welcome3:"Vaša preciznost u pronalaženju ove delikatne ravnoteže biće ključna za uspeh eksperimenta. Srećno!",
+        startExp: "Počni Eksperiment",
+        gameinstr1: "Pronađite Tačku Prevlacenja (najmanji ugao za naginjanje)! Koristite tastere sa strelicama levo i desno da naginjete cev u označenom pravcu.",
+        gameinstr2: "Kada mislite da ste pronašli tačku prevlačenja, pritisnite <span class='space-bar'>RAZMAKNICU</span>.",
+        findTippingPoint: "Pronađite Tačku Prevlacenja (najmanji ugao za naginjanje)! Koristite levo i desno dugme sa strelicama da naginjete cev u označenom pravcu.",
+        pressSpaceBar: "Kada mislite da ste pronašli tačku prevlačenja, pritisnite SPACE BAR.",
+        surveyHeader: "Deo 2: Anketa",
+        surveyText: "Hvala što ste igrali. Sada ćete kliknuti na link ispod da popunite nekoliko pitanja o igri koju ste upravo igrali.",
+        continueToSurvey: "Nastavite ka Anketi"
+    }
+};
+
+
 class TubeExperiment extends Experiment {
 
     constructor() {
@@ -14,7 +50,8 @@ class TubeExperiment extends Experiment {
         this.trialStartTime = 0;
         this.trials = [];
         this.trialtypes = [];
-        this.FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfiziJ_yQ7LLJEejvsMwjNVu7zyCmSQX8qUwC8sB7QDB6LmfQ/viewform?usp=pp_url&entry.766586855='
+        this.FORM_URL_en = 'https://docs.google.com/forms/d/e/1FAIpQLSfiziJ_yQ7LLJEejvsMwjNVu7zyCmSQX8qUwC8sB7QDB6LmfQ/viewform?usp=pp_url&entry.766586855='
+        this.FORM_URL_rs = 'https://docs.google.com/forms/d/e/1FAIpQLSc0P46iTLHyFHEJDGxZaqMF7k76JOuXgk1ZMRhqHNBxXyfKtA/viewform?usp=pp_url&entry.766586855='
         this.image_name = 'girl2';
         this.tube = document.getElementById('tube');
         this.line = document.querySelector('line');
@@ -71,8 +108,15 @@ class TubeExperiment extends Experiment {
             }
             this.line.setAttribute('transform', `rotate(${this.currentAngle}, 514, 163)`);
         });
+
+        this.currentLanguage = getLanguage(); // Determine the current language
+        this.setFormUrl(); // Set the appropriate form URL based on the language
+    
     }
   
+    setFormUrl() {
+        this.FORM_URL = (this.currentLanguage === 'rs') ? this.FORM_URL_rs : this.FORM_URL_en;
+    }
     generateTrials() {
         for(let i = 0; i < this.tubeTypes.length; i++) {
             for(let arrowdirection of ['left', 'right']) {
@@ -189,6 +233,32 @@ class TubeExperiment extends Experiment {
   
   }
 
+
+function updatePageContent(lang) {
+
+    console.log("Language set to: ", lang); // Debugging line
+    console.log("Translations for language: ", translations[lang]); // Debugging line
+    
+    document.getElementById('gametitle').innerText = translations[lang].tippingPointGame;
+    document.getElementById('enterPassword').placeholder = translations[lang].enterPassword;
+    document.getElementById('welcome1').innerText = translations[lang].welcome1;
+    document.getElementById('welcome2').innerText = translations[lang].welcome2;
+    document.getElementById('welcome3').innerText = translations[lang].welcome3;
+    document.getElementById('closeButton').innerText = translations[lang].startExp;
+    document.getElementById('gameinstr1').innerHTML = translations[lang].gameinstr1;
+    document.getElementById('gameinstr2').innerHTML = translations[lang].gameinstr2;
+    document.getElementById('surveyHeader').innerText = translations[lang].surveyHeader;
+    document.getElementById('surveyText').innerText = translations[lang].surveyText; // Ensure you add an id="surveyText" to the paragraph <p> tag
+    document.getElementById('formbutton').innerText = translations[lang].continueToSurvey;
+}
+
+
+
+function getLanguage() {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    return urlSearchParams.get('lang') || 'en'; // Default to English if no parameter found
+}
+
 function preloadImages(imageUrls) {
     let loadPromises = imageUrls.map(url => {
         return new Promise((resolve, reject) => {
@@ -231,6 +301,9 @@ window.onload = function() {
         // Handle image loading errors here
     });
     
+    const lang = getLanguage(); // You need to define getLanguage() to read the 'lang' URL parameter
+    updatePageContent(lang); // And define updatePageContent() to update the page's content
+
 }
 
 function getQueryParam(param) {
