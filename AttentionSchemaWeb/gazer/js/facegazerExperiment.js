@@ -7,6 +7,69 @@ const config = {
   numberOfTrials: 6 // We can have more images then trials, so we can randomize the images.
   // ... other config properties
 };
+
+const translations = {
+  en: {
+      instructionsText: "Instructions",
+      instructionsP1: "In this experiment, we will use your webcam to estimate your eye position as you look at pictures.",
+      instructionsP2: "You will need to keep your head still. It can be helpful to stabilize your head on a stack of books to increase accuracy.",
+      instructionsP3: "Before we begin, we need to do some calibration.  Find the small green box and click on it 3 times.  This will happen several times.",
+      closeButton: "Start Experiment",
+      loadingImagesTitle: "Loading Images",
+      loadingImages1: "10 images will be shown for 3 seconds each.  Just enjoy the images and keep still. Easy!",
+      EndTitle: "All done",
+      End1: "What did you notice?  Where did you tend to look?",
+      End2: "We will be processing your results (anonymous eye positions) to determine where people look on average.",
+      End3: "Back to Experiments"
+
+  },
+  rs: {
+      instructionsText: "Instrukcije",
+      instructionsP1: "U ovom eksperimentu koristićemo vašu veb kameru kako bismo procenili poziciju vaših očiju dok goledate slike.",
+      instructionsP2: "Moraćete da držite glavu mirno. Možeti sebi pomoći u ovome tako što ćete nasloniti glavu na gomilu knjiga kako biste povećali preciznost.",
+      instructionsP3: "Pre nego što počnemo, moramo da izvršimo kalibraciju. Nađite mali zeleni okvir i kliknite na njega 3 puta. Ovo će se ponoviti nekoliko puta.",
+      closeButton: "Počni Eksperiment",
+      loadingImagesTitle: "Loading Images",
+      loadingImages1: "10 images will be shown for 3 seconds each.  Just enjoy the images and keep still. Easy!",
+      EndTitle: "All done",
+      End1: "What did you notice?  Where did you tend to look?",
+      End2: "We will be processing your results (anonymous eye positions) to determine where people look on average.",
+      End3: "Back to Experiments"
+  }
+};
+
+
+function getLanguage() {
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  return urlSearchParams.get('lang') || 'en'; // Default to English if no parameter found
+}
+
+
+function updatePageContent(lang) {
+
+console.log("Language set to: ", lang); // Debugging line
+//console.log("Translations for language: ", translations[lang]); // Debugging line
+
+document.getElementById('instructionsText').innerText = translations[lang].instructionsText;
+document.getElementById('instructionsP1').innerText = translations[lang].instructionsP1;
+document.getElementById('instructionsP2').innerText = translations[lang].instructionsP2;
+document.getElementById('instructionsP3').innerText = translations[lang].instructionsP3;
+document.getElementById('closeButton').innerText = translations[lang].closeButton;
+document.getElementById('loadingImagesTitle').innerText = translations[lang].loadingImagesTitle;
+document.getElementById('loadingImages1').innerText = translations[lang].loadingImages1;
+document.getElementById('EndTitle').innerText = translations[lang].EndTitle;
+document.getElementById('End1').innerText = translations[lang].End1;
+document.getElementById('End2').innerText = translations[lang].End2;
+document.getElementById('End3').innerText = translations[lang].End3;
+}
+
+window.onload = function() {
+    
+  const lang = getLanguage(); // You need to define getLanguage() to read the 'lang' URL parameter
+  updatePageContent(lang); // And define updatePageContent() to update the page's content
+
+}
+
 class EyeTrackingExperiment extends Experiment {
 
 
@@ -49,8 +112,6 @@ class EyeTrackingExperiment extends Experiment {
       calibrtaionPoints: this.calibrationLocations.length
     };
   }
-
-  
 
   async generateTrials() {
     this.faces = [];

@@ -22,11 +22,54 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+const translations = {
+  en: {
+      instructionsText: "Attention Reaction Time",
+      instructionsP1: "Place your hands like this then press the <span class='badge badge-secondary'>Space Bar</span>"
+
+  },
+  rs: {
+      instructionsText: "Vreme reakcije vezane za pažnju",
+      instructionsP1: "Postavite ruke ovako a zatim pritisnite razmak, odnosno <span class='badge badge-secondary'>Space Bar</span> na Vašoj tastaturi."
+
+  }
+};
+
+
+function getLanguage() {
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  return urlSearchParams.get('lang') || 'en'; // Default to English if no parameter found
+}
+
+
+function updatePageContent(lang) {
+
+console.log("Language set to: ", lang); // Debugging line
+//console.log("Translations for language: ", translations[lang]); // Debugging line
+
+document.getElementById('instructionsText').innerText = translations[lang].instructionsText;
+document.getElementById('instructionsP1').innerHTML = translations[lang].instructionsP1;
+document.getElementById('handImg').src = `./img/Hand_${lang}.png`;
+
+}
+
+window.onload = function() {
+    
+  const lang = getLanguage(); // You need to define getLanguage() to read the 'lang' URL parameter
+  updatePageContent(lang); // And define updatePageContent() to update the page's content
+
+}
+
 class AttentionRTExperiment extends Experiment {
 
   constructor() {
     super(); 
-    this.keys = ['A', 'S', 'D', 'F', 'J', 'K', 'L', ';'];
+
+    if (getLanguage() == 'rs') {
+      this.keys = ['A', 'S', 'D', 'F', 'J', 'K', 'L', 'Č'];
+    } else {
+      this.keys = ['A', 'S', 'D', 'F', 'J', 'K', 'L', ';'];
+    }
     this.leftKeys = this.keys.slice(0, 4);
     this.rightKeys = this.keys.slice(4);
       

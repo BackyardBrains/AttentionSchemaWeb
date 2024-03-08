@@ -239,7 +239,7 @@ function updatePageContent(lang) {
     console.log("Language set to: ", lang); // Debugging line
     console.log("Translations for language: ", translations[lang]); // Debugging line
     
-    document.getElementById('gametitle').innerText = translations[lang].tippingPointGame;
+    document.getElementById('instructionsText').innerText = translations[lang].tippingPointGame;
     document.getElementById('enterPassword').placeholder = translations[lang].enterPassword;
     document.getElementById('welcome1').innerText = translations[lang].welcome1;
     document.getElementById('welcome2').innerText = translations[lang].welcome2;
