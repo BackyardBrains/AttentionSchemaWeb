@@ -26,11 +26,11 @@ const translations = {
         // Add all other text content here in Serbian
         gametitle: "Eksperiment tačke prevrtanja",
         welcome1: "Hvala što učestvujete u eksperimentu tačke prevrtanja tube! Vaš zadatak je da odredite tačan položaj (najmanji ugao) iz koga virtuelna tuba neċe moċi da se vrati u vertikalan položaj, već će pasti.",
-        welcome2:"Tuba je postavljena na stolu, a smer nagiba označen je strelicom. Koristite tastere sa strelicama levo i desno kako biste prilagodili nagib. Kada odredite kritičnu tačku tj. položaj u kome mislite da će tuba pasti, pritisnite razmak  (space bar).",
+        welcome2:"Tuba je postavljena na stolu, a smer nagiba označen je strelicom. Koristite tastere sa strelicama levo i desno kako biste promenili ugao tube. Kada odredite kritičnu tačku tj. položaj u kome mislite da će tuba pasti, pritisnite razmak  (space bar).",
         welcome3:"Vaša preciznost u pronalaženju ove delikatne ravnoteže biće ključna za uspeh eksperimenta. Pogledajte video za više detalja. Srećno!",
-        startExp: "Počni Eksperiment",
-        gameinstr1: "Pronađite tačku prevrtanja! Koristite tastere sa strelicama levo i desno da promenite ugao tube u označenom pravcu.",
-        gameinstr2: "Kada mislite da ste pronašli tačku pada, pritisnite razmak <span class='space-bar'>RAZMAKNICU</span>.",
+        startExp: "Počni eksperiment",
+        gameinstr1: "Pronađite tačku pada tube! Koristite tastere sa strelicama levo i desno da promenite ugao tube u označenom pravcu.",
+        gameinstr2: "Kada odredite tačku prevrtanja, pritisnite taster <span class='space-bar'>razmak</span>.",
         surveyHeader: "Deo 2: Anketa",
         surveyText: "Hvala što ste učestvovali u eksperimentu. Kliknite na link i  odgovorite na nekoliko pitanja o eksperimentu.",
         continueToSurvey: "Nastavite ka Anketi"
