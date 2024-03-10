@@ -21,7 +21,7 @@
             en: {
                 pageTitle: "Experiments",
                 experiments: {
-                    attentionrt: "Attention Reaction Time Experiment",
+                    attentionRT: "Attention Reaction Time Experiment",
                     gazer: "Eye Tracking Experiment",
                     tube: "Tube Tipping Point Experiment"
                 }
@@ -29,7 +29,7 @@
             rs: {
                 pageTitle: "Eksperimenti",
                 experiments: {
-                    attentionrt: "Vreme reakcije vezane za pažnju",
+                    attentionRTt: "Vreme reakcije vezane za pažnju",
                     gazer: "Eksperiment praćenja očiju",
                     tube: "Eksperiment tačke prevrtanja"
                 }
@@ -50,6 +50,8 @@
 
         function updatePageContent() {
             const lang = getLanguage();
+            const group= getGroup();
+
             const experimentList = document.getElementById('experimentList');
 
             document.getElementById('pageTitle').innerText = translations[lang].pageTitle;
@@ -60,7 +62,7 @@
             // Generate experiment links based on the selected language
             for (const [id, title] of Object.entries(translations[lang].experiments)) {
                 const link = document.createElement('a');
-                link.href = `./${id}/index.html?lang=${lang}`;
+                link.href = `./${id}/index.html?lang=${lang}&SG=${group}`;
                 link.className = 'list-group-item list-group-item-action';
                 link.innerText = title;
                 experimentList.appendChild(link);
