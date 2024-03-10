@@ -1,7 +1,7 @@
 const config = {
   experiment_name: 'gazer',
   experiment_version: '0.5',
-  trialDuration: 4000, // Duration in milliseconds
+  trialDuration: 3000, // Duration in milliseconds
   hideCursorDuringTrials: true, //show the red dot over eyes?
   numberOfImages: 8,
   numberOfTrials: 6 // We can have more images then trials, so we can randomize the images.
@@ -25,16 +25,16 @@ const translations = {
   },
   rs: {
       instructionsText: "Instrukcije",
-      instructionsP1: "U ovom eksperimentu koristićemo vašu veb kameru kako bismo procenili poziciju vaših očiju dok goledate slike.",
+      instructionsP1: "U ovom eksperimentu koristićemo Vašu veb kameru da bi procenili poziciju vaših očiju dok gledate slike.",
       instructionsP2: "Moraćete da držite glavu mirno. Možeti sebi pomoći u ovome tako što ćete nasloniti glavu na gomilu knjiga kako biste povećali preciznost.",
       instructionsP3: "Pre nego što počnemo, moramo da izvršimo kalibraciju. Nađite mali zeleni okvir i kliknite na njega 3 puta. Ovo će se ponoviti nekoliko puta.",
       closeButton: "Počni Eksperiment",
-      loadingImagesTitle: "Loading Images",
-      loadingImages1: "10 images will be shown for 3 seconds each.  Just enjoy the images and keep still. Easy!",
-      EndTitle: "All done",
-      End1: "What did you notice?  Where did you tend to look?",
-      End2: "We will be processing your results (anonymous eye positions) to determine where people look on average.",
-      End3: "Back to Experiments"
+      loadingImagesTitle: "Učitavanje slika",
+      loadingImages1: "10 slika će biti prikazano po 3 sekunde svaka. Samo uživajte u slikama i budite mirni. Polako!",
+      EndTitle: "Sve završeno!",
+      End1: "Šta ste primetili? Gdje ste obično tražili?",
+      End2: "Obradit ćemo vaše rezultate (anonimne pozicije očiju) kako bismo utvrdili gdje ljudi u prosjeku gledaju.",
+      End3: "Povratak na eksperimente"
   }
 };
 

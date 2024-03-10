@@ -9,7 +9,7 @@ const translations = {
         testVerification: "Test Verification",
         enterPassword: "Please enter the password to start the experiment:",
         // Add all other text content here in English
-        tippingPointGame: "The Tipping Point Game",
+        gametitle: "The Tipping Point Game",
         welcome1: "Welcome to the Tube Tilt Experiment! Your task is to determine the 'tipping point' at which a virtual tube will fall over. Think carefully about the exact point where a tipped tube transitions from going straight back up again to falling down. We want to know the smallest angle in which it fall over. See video for more details.",
         welcome2: "The tube will be sitting on a table, and the direction of the tilt is indicated by an arrow. Use the left and right arrow keys to adjust the tilt, and press the space bar when you believe you've reached this critical angle.",
         welcome3: "Your precision in finding this delicate balance will be key to the experiment's success. Good luck!",
@@ -24,17 +24,15 @@ const translations = {
         testVerification: "Provera Testa",
         enterPassword: "Unesite lozinku da biste započeli eksperiment:",
         // Add all other text content here in Serbian
-        tippingPointGame: "Igra Prevlacenja",
-        welcome1: "Dobrodošli u eksperiment nagiba cevi! Vaš zadatak je da odredite 'tačku prevlačenja' pri kojoj će virtuelna cev pasti. Pažljivo razmislite o tačnoj tački gde cev koja se naginje prelazi iz stanja da se vraća pravo gore u stanje pada. Želimo da znamo najmanji ugao u kojem će pasti. Pogledajte video za više detalja.",
-        welcome2:"Cev će biti postavljena na stolu, a smer nagiba je označen strelicom. Koristite tastere sa strelicama levo i desno da prilagodite nagib, i pritisnite razmaknicu kada verujete da ste dostigli ovu kritičnu tačku.",
-        welcome3:"Vaša preciznost u pronalaženju ove delikatne ravnoteže biće ključna za uspeh eksperimenta. Srećno!",
+        gametitle: "Eksperiment tačke prevrtanja",
+        welcome1: "Hvala što učestvujete u eksperimentu tačke prevrtanja tube! Vaš zadatak je da odredite tačan položaj (najmanji ugao) iz koga virtuelna tuba neċe moċi da se vrati u vertikalan položaj, već će pasti.",
+        welcome2:"Tuba je postavljena na stolu, a smer nagiba označen je strelicom. Koristite tastere sa strelicama levo i desno kako biste prilagodili nagib. Kada odredite kritičnu tačku tj. položaj u kome mislite da će tuba pasti, pritisnite razmak  (space bar).",
+        welcome3:"Vaša preciznost u pronalaženju ove delikatne ravnoteže biće ključna za uspeh eksperimenta. Pogledajte video za više detalja. Srećno!",
         startExp: "Počni Eksperiment",
-        gameinstr1: "Pronađite Tačku Prevlacenja (najmanji ugao za naginjanje)! Koristite tastere sa strelicama levo i desno da naginjete cev u označenom pravcu.",
-        gameinstr2: "Kada mislite da ste pronašli tačku prevlačenja, pritisnite <span class='space-bar'>RAZMAKNICU</span>.",
-        findTippingPoint: "Pronađite Tačku Prevlacenja (najmanji ugao za naginjanje)! Koristite levo i desno dugme sa strelicama da naginjete cev u označenom pravcu.",
-        pressSpaceBar: "Kada mislite da ste pronašli tačku prevlačenja, pritisnite SPACE BAR.",
+        gameinstr1: "Pronađite tačku prevrtanja! Koristite tastere sa strelicama levo i desno da promenite ugao tube u označenom pravcu.",
+        gameinstr2: "Kada mislite da ste pronašli tačku pada, pritisnite razmak <span class='space-bar'>RAZMAKNICU</span>.",
         surveyHeader: "Deo 2: Anketa",
-        surveyText: "Hvala što ste igrali. Sada ćete kliknuti na link ispod da popunite nekoliko pitanja o igri koju ste upravo igrali.",
+        surveyText: "Hvala što ste učestvovali u eksperimentu. Kliknite na link i  odgovorite na nekoliko pitanja o eksperimentu.",
         continueToSurvey: "Nastavite ka Anketi"
     }
 };
@@ -239,7 +237,7 @@ function updatePageContent(lang) {
     console.log("Language set to: ", lang); // Debugging line
     console.log("Translations for language: ", translations[lang]); // Debugging line
     
-    document.getElementById('instructionsText').innerText = translations[lang].tippingPointGame;
+    document.getElementById('gametitle').innerText = translations[lang].gametitle;
     document.getElementById('enterPassword').placeholder = translations[lang].enterPassword;
     document.getElementById('welcome1').innerText = translations[lang].welcome1;
     document.getElementById('welcome2').innerText = translations[lang].welcome2;
