@@ -25,12 +25,28 @@ document.addEventListener("DOMContentLoaded", function() {
 const translations = {
   en: {
       instructionsText: "Attention Reaction Time",
-      instructionsP1: "Place your hands like this then press the <span class='badge badge-secondary'>Space Bar</span>"
+      instructionsP1: "Place your hands like this then press the <span class='badge badge-secondary'>Space Bar</span>",
+      part1instr: "Part 1: Press the green key as fast as you can!",
+      part2instr: "Part 2: The yellow arrow now indicates which key will turn green. Focus there.",
+      colorWarning: "(Sacekaj da taster promeni boju)",
+      graphTitle: "Average reaction time (ms)",
+      cuedTitle: "Cued (With attention)",
+      uncuedTitle: "Uncued (Without attention)",
+      gameOver: "Game over! Here are your average reaction times:",
+      buttonText: "Back to Experiments"
 
   },
   rs: {
       instructionsText: "Vreme reakcije vezane za pažnju",
-      instructionsP1: "Postavite ruke ovako a zatim pritisnite razmak, odnosno <span class='badge badge-secondary'>Space Bar</span> na Vašoj tastaturi."
+      instructionsP1: "Postavite ruke kao na slici i pritisnite razmak <span class='badge badge-secondary'>Space Bar</span> na tastaturi.",
+      part1instr: "Deo 1: Pritisnite zeleni taster što je brže moguće!",
+      part2instr: "Deo 2: Žuta strelica pokazuje koji taster će promeniti boju u zelenu. Fokusirajte se na strelicu.",
+      colorWarning: "(Sacekaj da taster promeni boju)",
+      graphTitle: "Prosečno vreme reakcije (ms)",
+      cuedTitle: "Sa sugestijom (Sa pažnjom)",
+      uncuedTitle: "Bez sugestije (Bez pažnje)",
+      gameOver: "Kraj igre! Evo vaših prosečnih vremena reakcije:",
+      buttonText: "Nazad na eksperimente"
 
   }
 };
@@ -50,6 +66,7 @@ console.log("Language set to: ", lang); // Debugging line
 document.getElementById('instructionsText').innerText = translations[lang].instructionsText;
 document.getElementById('instructionsP1').innerHTML = translations[lang].instructionsP1;
 document.getElementById('handImg').src = `./img/Hand_${lang}.png`;
+document.getElementById('start-button').innerText = translations[lang].buttonText;
 
 }
 
@@ -65,11 +82,14 @@ class AttentionRTExperiment extends Experiment {
   constructor() {
     super(); 
 
-    if (getLanguage() == 'rs') {
-      this.keys = ['A', 'S', 'D', 'F', 'J', 'K', 'L', 'Č'];
+    this.lang = getLanguage();
+
+    if (this.lang == 'rs') {
+      this.keys = ['A', 'S', 'D', 'F', 'J', 'K', 'L', 'Č']; /* 'Č' */
     } else {
       this.keys = ['A', 'S', 'D', 'F', 'J', 'K', 'L', ';'];
     }
+
     this.leftKeys = this.keys.slice(0, 4);
     this.rightKeys = this.keys.slice(4);
       
@@ -145,19 +165,23 @@ class AttentionRTExperiment extends Experiment {
     instructionElement.textContent = ".";
 
     if (condition == "uncued") {
-      headerElement.textContent = "Part 1: Press the green key as fast as you can!";
+      headerElement.textContent = translations[this.lang].part1instr;
       setTimeout(() => {
       document.getElementById(key).classList.add('highlight');
      
       startTime = new Date();
       timerInterval = setInterval(() => {
             currentTime = new Date();
-            timeElement.textContent = `Time: ${(currentTime - startTime)/ 1000} seconds`;
+            if (this.lang == 'rs') {
+              timeElement.textContent = `Vreme:  ${(currentTime - startTime)/ 1000} sekundi`;
+            } else {
+              timeElement.textContent = `Time: ${(currentTime - startTime)/ 1000} seconds`;
+            }
           }, 100);
         },2000);
     } else {
       // 'cued'
-      headerElement.textContent = "Part 2: The yellow arrow now indicates which key will turn green. Focus there.";
+      headerElement.textContent = translations[this.lang].part2instr;
         
       setTimeout(() => {
         
@@ -170,9 +194,12 @@ class AttentionRTExperiment extends Experiment {
             document.getElementById(key).classList.add('highlight');
             startTime = new Date();
             timerInterval = setInterval(() => {
-                currentTime = new Date();
-                timeElement.textContent = `Time: ${(currentTime - startTime)/ 1000} seconds`;
-  
+                        currentTime = new Date();
+                        if (this.lang == 'rs') {
+                          timeElement.textContent = `Vreme:  ${(currentTime - startTime)/ 1000} sekundi`;
+                        } else {
+                          timeElement.textContent = `Time: ${(currentTime - startTime)/ 1000} seconds`;
+                        }
                     }, 100);
                 }, 3000);
             }, 2000);
@@ -183,12 +210,12 @@ class AttentionRTExperiment extends Experiment {
 
       document.removeEventListener('keydown', keydownListener);     
 
-      keydownListener = function (event) {
+      keydownListener = (event) => {
 
         key = experiment.currentTarget
         console.log(key + " was pressed")
         if (!document.querySelector('.highlight')) {
-          instructionElement.textContent = "Wait for a key to flash.";
+          instructionElement.textContent = translations[this.lang].colorWarning;
           return; 
         }
 
@@ -230,7 +257,7 @@ class AttentionRTExperiment extends Experiment {
     keyboard.style.display = 'none';
     endpage.style.display = 'block';
 
-    instructionElement.textContent = "Game over! Here are your average reaction times:";
+    instructionElement.textContent = translations[this.lang].gameOver;
     document.getElementById('chart').classList.remove('d-none');
     document.removeEventListener('keydown', keydownListener);     
 
@@ -246,9 +273,9 @@ class AttentionRTExperiment extends Experiment {
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Uncued (Without attention)', 'Cued (With attention)'],
+            labels: [translations[this.lang].uncuedTitle, translations[this.lang].cuedTitle],
             datasets: [{
-                label: 'Average reaction time (ms)',
+                label: translations[this.lang].graphTitle,
                 data: averageTimes,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',

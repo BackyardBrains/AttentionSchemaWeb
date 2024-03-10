@@ -30,10 +30,10 @@ const translations = {
       instructionsP3: "Pre nego što počnemo, moramo da izvršimo kalibraciju. Nađite mali zeleni okvir i kliknite na njega 3 puta. Ovo će se ponoviti nekoliko puta.",
       closeButton: "Počni Eksperiment",
       loadingImagesTitle: "Učitavanje slika",
-      loadingImages1: "10 slika će biti prikazano po 3 sekunde svaka. Samo uživajte u slikama i budite mirni. Polako!",
-      EndTitle: "Sve završeno!",
-      End1: "Šta ste primetili? Gdje ste obično tražili?",
-      End2: "Obradit ćemo vaše rezultate (anonimne pozicije očiju) kako bismo utvrdili gdje ljudi u prosjeku gledaju.",
+      loadingImages1: "Videćete 10 slika, svaku u trajanju od 4 sekunde. Trudite se da budete što mirniji i da ne pomerate telo i glavu. Uživajte u slikama!",
+      EndTitle: "Hvala!",
+      End1: "Šta ste primetili?   U koji deo slike ste najčešće gledali?",
+      End2: "Analiziraćemo rezultate kako bi utvrdili gde ljudi u proseku najčešće gledaju.",
       End3: "Povratak na eksperimente"
   }
 };

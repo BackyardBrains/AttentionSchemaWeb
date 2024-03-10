@@ -1,35 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Experiments Index</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/experiments.css" rel="stylesheet">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
+    <meta charset="UTF-8">
+    <title>Experiments Index</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/experiments.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
+    <div class="container mt-5">
+        <h1 class="text-center" id="pageTitle">Experiments</h1>
+        <div class="list-group mt-4" id="experimentList"></div>
+    </div>
 
-<div class="container mt-5">
-  <h1 class="text-center">Experiments</h1>
-  <div class="list-group mt-4">
-    <a href="./tube/index.html" class="list-group-item list-group-item-action">
-      Tube Tipping Point Experiment
-    </a>
-    <a href="./attentionRT/index.html" class="list-group-item list-group-item-action">
-      Attention Reaction Time Experiment
-    </a>
-    <a href="./gazer/index.html" class="list-group-item list-group-item-action">
-      Eye Tracking Experiment
-    </a>
+    <script>
+        const translations = {
+            en: {
+                pageTitle: "Experiments",
+                experiments: {
+                    attentionrt: "Attention Reaction Time Experiment",
+                    gazer: "Eye Tracking Experiment",
+                    tube: "Tube Tipping Point Experiment"
+                }
+            },
+            rs: {
+                pageTitle: "Eksperimenti",
+                experiments: {
+                    attentionrt: "Vreme reakcije vezane za pažnju",
+                    gazer: "Eksperiment praćenja očiju",
+                    tube: "Eksperiment tačke prevrtanja"
+                }
+            }
+        };
 
-  </div>
-</div>
+        function getLanguage() {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            return urlSearchParams.get('lang') || 'en'; // Default to English if no parameter found
+          
+        }
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        function getGroup() {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            return urlSearchParams.get('SG') || ''; // Default to English if no parameter found
+        }
+
+
+        function updatePageContent() {
+            const lang = getLanguage();
+            const experimentList = document.getElementById('experimentList');
+
+            document.getElementById('pageTitle').innerText = translations[lang].pageTitle;
+
+            // Clear the experiment list
+            experimentList.innerHTML = '';
+
+            // Generate experiment links based on the selected language
+            for (const [id, title] of Object.entries(translations[lang].experiments)) {
+                const link = document.createElement('a');
+                link.href = `./${id}/index.html?lang=${lang}`;
+                link.className = 'list-group-item list-group-item-action';
+                link.innerText = title;
+                experimentList.appendChild(link);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', updatePageContent);
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
