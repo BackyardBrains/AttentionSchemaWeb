@@ -85,7 +85,7 @@ class AttentionRTExperiment extends Experiment {
     this.lang = getLanguage();
 
     if (this.lang == 'rs') {
-      this.keys = ['A', 'S', 'D', 'F', 'J', 'K', 'L', 'Č']; /* 'Č' */
+      this.keys = ['A', 'S', 'D', 'F', 'H', 'J', 'K', 'L']; /* 'Č' */
     } else {
       this.keys = ['A', 'S', 'D', 'F', 'J', 'K', 'L', ';'];
     }
