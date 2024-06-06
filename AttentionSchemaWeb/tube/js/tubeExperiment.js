@@ -50,7 +50,7 @@ class TubeExperiment extends Experiment {
         this.trialtypes = [];
         this.FORM_URL_en = 'https://docs.google.com/forms/d/e/1FAIpQLSfiziJ_yQ7LLJEejvsMwjNVu7zyCmSQX8qUwC8sB7QDB6LmfQ/viewform?usp=pp_url&entry.766586855='
         this.FORM_URL_rs = 'https://docs.google.com/forms/d/e/1FAIpQLSc0P46iTLHyFHEJDGxZaqMF7k76JOuXgk1ZMRhqHNBxXyfKtA/viewform?usp=pp_url&entry.766586855='
-        this.image_name = 'girl2';
+        this.image_name = 'threatlevel';
         this.tube = document.getElementById('tube');
         this.line = document.querySelector('line');
         this.arrow = document.getElementById('arrow');
@@ -271,10 +271,10 @@ function preloadImages(imageUrls) {
 
 window.onload = function() {
     const faceImageUrls = [ //Hack.  Sould be auto-generated from variables.
-        'img/left_girl2_sighted.png',
-        'img/left_girl2_blindfold.png',
-        'img/right_girl2_sighted.png',
-        'img/right_girl2_blindfold.png'
+        'img/left_threatlevel_type1.png',
+        'img/left_threatlevel_type2.png',
+        'img/right_threatlevel_type1.png',
+        'img/right_threatlevel_type2.png'
     ];
     
     preloadImages(faceImageUrls).then(() => {
