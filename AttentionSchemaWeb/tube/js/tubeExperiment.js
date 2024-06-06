@@ -1,6 +1,6 @@
 const config = {
     experiment_name: 'tube',
-    experiment_version: '1.3',
+    experiment_version: '2.0',
     datafile_version: '1.4'
   };
 
@@ -14,7 +14,7 @@ const translations = {
         welcome2: "The tube will be sitting on a table, and the direction of the tilt is indicated by an arrow. Use the left and right arrow keys to adjust the tilt, and press the space bar when you believe you've reached this critical angle.",
         welcome3: "Your precision in finding this delicate balance will be key to the experiment's success. Good luck!",
         startExp: "Start Experiment",
-        gameinstr1: "Find the Tipping Point (smallest angle to tip)! Use the left and right arrow keys to tilt the tube in the direction indicated.",
+        gameinstr1: "Find the Tipping Point (smallest angle to tip)! Use the left and right arrow keys to tilt the tube in the direction indicated. The faces are looking at the color of the tube, and can be ignored.",
         gameinstr2: "When you think you have found the tipping point, press  <span class='space-bar'>SPACE BAR</span>",
         surveyHeader: "Part 2: Survey",
         surveyText: "Thank you for playing. You will now click the link below to fill out a few questions about the game you just played.",
@@ -119,7 +119,7 @@ class TubeExperiment extends Experiment {
         for(let i = 0; i < this.tubeTypes.length; i++) {
             for(let arrowdirection of ['left', 'right']) {
                 for(let faceSide of ['left', 'right']) {
-                    for(let faceType of ['sighted', 'blindfold']) {
+                    for(let faceType of ['type1', 'type2']) {
                         this.trialtypes.push({tubeTypeIndex: i, arrowDirection: arrowdirection, faceSide: faceSide, faceType: faceType });
                     }
                 }
