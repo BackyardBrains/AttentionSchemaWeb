@@ -48,8 +48,9 @@ class TubeExperiment extends Experiment {
         this.trialStartTime = 0;
         this.trials = [];
         this.trialtypes = [];
-        this.FORM_URL_en = 'https://docs.google.com/forms/d/e/1FAIpQLSfiziJ_yQ7LLJEejvsMwjNVu7zyCmSQX8qUwC8sB7QDB6LmfQ/viewform?usp=pp_url&entry.766586855='
-        this.FORM_URL_rs = 'https://docs.google.com/forms/d/e/1FAIpQLSc0P46iTLHyFHEJDGxZaqMF7k76JOuXgk1ZMRhqHNBxXyfKtA/viewform?usp=pp_url&entry.766586855='
+        //this.FORM_URL_en = 'https://docs.google.com/forms/d/e/1FAIpQLSfiziJ_yQ7LLJEejvsMwjNVu7zyCmSQX8qUwC8sB7QDB6LmfQ/viewform?usp=pp_url&entry.766586855='
+        this.FORM_URL_en = 'https://docs.google.com/forms/d/e/1FAIpQLScp8OpnIVFY5GnInuG8QnMheuPEPs6B_l2VNBjyhx2sLAgewQ/viewform?usp=pp_url&entry.766586855=';
+        this.FORM_URL_rs = 'https://docs.google.com/forms/d/e/1FAIpQLSc0P46iTLHyFHEJDGxZaqMF7k76JOuXgk1ZMRhqHNBxXyfKtA/viewform?usp=pp_url&entry.766586855=';
         this.image_name = 'threatlevel';
         this.tube = document.getElementById('tube');
         this.line = document.querySelector('line');
@@ -119,7 +120,7 @@ class TubeExperiment extends Experiment {
         for(let i = 0; i < this.tubeTypes.length; i++) {
             for(let arrowdirection of ['left', 'right']) {
                 for(let faceSide of ['left', 'right']) {
-                    for(let faceType of ['type1', 'type2']) {
+                    for(let faceType of ['ID001', 'ID022']) {
                         this.trialtypes.push({tubeTypeIndex: i, arrowDirection: arrowdirection, faceSide: faceSide, faceType: faceType });
                     }
                 }
@@ -271,10 +272,10 @@ function preloadImages(imageUrls) {
 
 window.onload = function() {
     const faceImageUrls = [ //Hack.  Sould be auto-generated from variables.
-        'img/left_threatlevel_type1.png',
-        'img/left_threatlevel_type2.png',
-        'img/right_threatlevel_type1.png',
-        'img/right_threatlevel_type2.png'
+        'img/left_threatlevel_ID001.png',
+        'img/left_threatlevel_ID022.png',
+        'img/right_threatlevel_ID001.png',
+        'img/right_threatlevel_ID022.png'
     ];
     
     preloadImages(faceImageUrls).then(() => {
