@@ -33,7 +33,25 @@ def data():
         return jsonify(message="GET request to /data")
     elif request.method == 'POST':
         data = request.get_json()
-        return jsonify(message="POST request to /data", data=data)
+        uuid = data.get('uuid', 'default_uuid')
+        counter = 0
+        directory = '/uploads'
+        filename = f"{uuid}.json"
+        full_path = os.path.join(directory, filename)
 
+        # Ensure the directory exists
+        os.makedirs(directory, exist_ok=True)
+
+        # Check if file exists and append a counter if it does
+        while os.path.isfile(full_path):
+            counter += 1
+            filename = f"{uuid}.{str(counter).zfill(2)}.json"
+            full_path = os.path.join(directory, filename)
+
+        with open(full_path, 'w') as file:
+            json.dump(data, file)
+
+        return jsonify(message="POST request to /data", filename=filename)
+    
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)

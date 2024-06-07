@@ -28,7 +28,7 @@ const translations = {
       instructionsP1: "Place your hands like this then press the <span class='badge badge-secondary'>Space Bar</span>",
       part1instr: "Part 1: Press the green key as fast as you can!",
       part2instr: "Part 2: The yellow arrow now indicates which key will turn green. Focus there.",
-      colorWarning: "(Sacekaj da taster promeni boju)",
+      colorWarning: "(Wait for the button to change color)",
       graphTitle: "Average reaction time (ms)",
       cuedTitle: "Cued (With attention)",
       uncuedTitle: "Uncued (Without attention)",
