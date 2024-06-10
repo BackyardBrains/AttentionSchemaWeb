@@ -1,8 +1,7 @@
 # sudo systemctl start schema_backyardbrains.service
 # sudo systemctl stop schema_backyardbrains.service
 # defined in /etc/systemd/system/schema_backyardbrains.service
-
-from flask import Flask, request, jsonify
+from flask import Flask, request
 import json
 from flask_cors import CORS
 import os
@@ -10,48 +9,30 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/upload', methods=['POST'])
-def upload_file():
+UPLOAD_DIRECTORY = '/var/www/schema.backyardbrains.com/uploads'
+
+@app.route('/data', methods=['POST'])
+def receive_data():
     data = request.get_json()
-    uuid = data['uuid']
-    counter = 0
-    filename = f"{uuid}.json"
 
-    # Check if file exists and append a counter if it does
-    while os.path.isfile(filename):
-        counter += 1
-        filename = f"{uuid}.{str(counter).zfill(2)}.json"
+    # Get the filename from the JSON data. If it doesn't exist, use 'data_log.json' as a default
+    uuid = data.get('UUID', 'data_log')
+    expname = data.get('experiment', 'exp')
+    filename = f"{expname}_{uuid}.json"
+    filepath = os.path.join(UPLOAD_DIRECTORY, filename)
 
-    with open(filename, 'w') as file:
-        json.dump(data, file)
+    # Ensure the upload directory exists
+    if not os.path.exists(UPLOAD_DIRECTORY):
+        os.makedirs(UPLOAD_DIRECTORY, exist_ok=True)
+
+    try:
+        with open(filepath, 'w') as f:
+            f.write(json.dumps(data, indent=4))
+            f.write("\n")
+    except PermissionError:
+        return 'Permission denied: Unable to write to the directory', 500
 
     return 'OK', 200
 
-@app.route('/data', methods=['GET', 'POST'])
-def data():
-    if request.method == 'GET':
-        return jsonify(message="GET request to /data")
-    elif request.method == 'POST':
-        data = request.get_json()
-        uuid = data.get('uuid', 'default_uuid')
-        counter = 0
-        directory = '/uploads'
-        filename = f"{uuid}.json"
-        full_path = os.path.join(directory, filename)
-
-        # Ensure the directory exists
-        os.makedirs(directory, exist_ok=True)
-
-        # Check if file exists and append a counter if it does
-        while os.path.isfile(full_path):
-            counter += 1
-            filename = f"{uuid}.{str(counter).zfill(2)}.json"
-            full_path = os.path.join(directory, filename)
-
-        with open(full_path, 'w') as file:
-            json.dump(data, file)
-
-        return jsonify(message="POST request to /data", filename=filename)
-    
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
