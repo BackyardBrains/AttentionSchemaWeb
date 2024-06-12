@@ -15,7 +15,7 @@ class StarExperiment extends Experiment {
         this.trialtypes = [];
         for(let dotDirection of ['left', 'right']) {
             for(let faceSide of ['left', 'right']) {
-                for(let faceType of ['sighted', 'blindfold']) {
+                for(let faceType of ['ID001', 'ID022']) {
                     this.trialtypes.push({tubeTypeIndex: i, dotDirection: dotDirection, faceSide: faceSide, faceType: faceType });
                 }
             }
